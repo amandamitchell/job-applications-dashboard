@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Application {
+  id              Int             @id @default(autoincrement())
+  createdAt       DateTime        @default(now())
+  employer        String?
+  title           String?
+  status          Status          @default(APPLIED)
+  employmentType  EmploymentType?
+  locationType    LocationType?
+  location        String?
+  compStart       Float?
+  compEnd         Float?
+  compType        CompType?
+  keySkills       String?
+  yoe             String?
+  notes           String?
+  searchSource    SearchSource?
+  resume          ResumeVersion?
+  events          Event[]
+}
+
+model Event {
+  id            Int         @id @default(autoincrement())
+  createdAt     DateTime    @default(now())
+  applicationId Int
+  application   Application @relation(fields: [applicationId], references: [id])
+  type          EventType   @default(APPLICATION)
+  interviewType InterviewType?
+  notes         String?
+}
+
+enum EmploymentType {
+  FTE
+  CONTRACT
+}
+
+enum LocationType {
+  ONSITE
+  REMOTE
+  HYBRID
+}
+
+enum CompType {
+  YEARLY
+  HOURLY
+}
+
+enum Status {
+  APPLIED
+  INTERVIEWING
+  OFFERED
+  REJECTED
+  WITHDRAWN
+  ACCEPTED
+  CLOSED
+}
+
+enum EventType {
+  APPLICATION
+  INTERVIEW
+  SCHEDULE_REQUEST
+  FOLLOW_UP
+  FOLLOW_UP_SELF
+  OFFER
+  REJECTION
+  WITHDRAWAL
+}
+
+enum InterviewType {
+  RECRUITER
+  MANAGER
+  TECH
+  PRODUCT
+  LIVE_CODE
+  AUTO_CODE
+  TAKE_HOME
+}
+
+enum SearchSource {
+  LINKEDIN
+  HIRINGCAFE
+  BUILTIN
+  INDEED
+  RECRUITER
+  REFERRAL
+  INTERNAL
+}
+
+enum ResumeVersion {
+  FRONTEND_2
+  FULLSTACK_2
+  ECOMM_2
+  FRONTEND_3
+  FULLSTACK_3
+  ECOMM_3
+}
