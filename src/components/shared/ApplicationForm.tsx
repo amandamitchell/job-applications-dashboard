@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
 import NextLink from "@/components/shared/NextLink";
 import { CompType, EmploymentType, LocationType, ResumeVersion, SearchSource, Status } from "@/generated/prisma/enums";
 import { ApplicationDetailData } from "@/lib/actions";

@@ -1,15 +1,7 @@
 import NextLink from "@/components/shared/NextLink";
-import { SortOrder } from "@/generated/prisma/internal/prismaNamespace";
-import { SortBy } from "@/types/types";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import ApplicationsTable from "./ApplicationsTable/ApplicationsTable";
 
-type HomeProps = {
-  sortDir: SortOrder;
-  sortBy: SortBy;
-};
-
-const Home = ({ children, sortBy, sortDir }: React.PropsWithChildren<HomeProps>) => {
+const Home = ({ children }: React.PropsWithChildren) => {
   return (
     <Box sx={{ bgcolor: "background.default", px: 3 }}>
       <Container
@@ -29,9 +21,7 @@ const Home = ({ children, sortBy, sortDir }: React.PropsWithChildren<HomeProps>)
             Add New
           </Button>
         </Stack>
-        <ApplicationsTable sortBy={sortBy} sortDir={sortDir}>
-          {children}
-        </ApplicationsTable>
+        {children}
       </Container>
     </Box>
   );

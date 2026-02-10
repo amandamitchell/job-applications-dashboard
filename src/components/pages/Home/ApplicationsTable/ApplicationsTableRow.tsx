@@ -7,7 +7,7 @@ import { Link, TableCell, TableRow } from "@mui/material";
 import { amber, grey, red } from "@mui/material/colors";
 
 type ApplicationsTableRowProps = {
-  application: ApplicationListData[number];
+  application: ApplicationListData["applications"][number];
 };
 
 const ApplicationsTableRow = ({ application }: ApplicationsTableRowProps) => {

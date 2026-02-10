@@ -1,93 +1,68 @@
 "use client";
 
 import { useTransition } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SortOrder } from "@/generated/prisma/internal/prismaNamespace";
+import type { ApplicationListData } from "@/lib/actions";
 import { SortBy } from "@/types/types";
-import { Backdrop, Paper, Table, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from "@mui/material";
+import { Backdrop, Paper, Table, TableBody, TableContainer } from "@mui/material";
+import ApplicationsTableHead from "./ApplicationsTableHead";
+import ApplicationsTablePagination from "./ApplicationsTablePagination";
+import ApplicationsTableRow from "./ApplicationsTableRow";
 
 type ApplicationsTableProps = {
+  applications: ApplicationListData["applications"];
+  count: number;
   sortDir: SortOrder;
   sortBy: SortBy;
+  page: number;
+  perPage: number;
 };
 
-const ApplicationsTable = ({ children, sortDir, sortBy }: React.PropsWithChildren<ApplicationsTableProps>) => {
+const ApplicationsTable = ({ applications, count, sortDir, sortBy, page, perPage }: ApplicationsTableProps) => {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
-  const handleSortClick = (newSortBy: string) => {
-    const newSortDir = sortDir === "asc" ? "desc" : "asc";
+  const handleParamsChange = (param: string, value: string) => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set(param, value);
     startTransition(() => {
-      router.push(`${pathname}?sortDir=${newSortBy === sortBy ? newSortDir : sortDir}&sortBy=${newSortBy}`);
+      router.push(`${pathname}?${newSearchParams.toString()}`);
     });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    handleParamsChange("page", newPage.toString());
+  };
+
+  const handleSortDirChange = () => {
+    handleParamsChange("sortDir", sortDir === "desc" ? "asc" : "desc");
+  };
+
+  const handleSortByChange = (newSortBy: string) => {
+    handleParamsChange("sortBy", newSortBy);
   };
 
   return (
     <>
       <TableContainer component={Paper}>
         <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell sortDirection={sortBy === "employer" ? sortDir : undefined}>
-                <TableSortLabel
-                  active={sortBy === "employer"}
-                  direction={sortBy === "employer" ? sortDir : undefined}
-                  onClick={() => handleSortClick("employer")}
-                >
-                  Employer
-                </TableSortLabel>
-              </TableCell>
-              <TableCell sortDirection={sortBy === "title" ? sortDir : undefined}>
-                <TableSortLabel
-                  active={sortBy === "title"}
-                  direction={sortBy === "title" ? sortDir : undefined}
-                  onClick={() => handleSortClick("title")}
-                >
-                  Title
-                </TableSortLabel>
-              </TableCell>
-              <TableCell sortDirection={sortBy === "recruiter" ? sortDir : undefined}>
-                <TableSortLabel
-                  active={sortBy === "recruiter"}
-                  direction={sortBy === "recruiter" ? sortDir : undefined}
-                  onClick={() => handleSortClick("recruiter")}
-                >
-                  3rd Party Recruiter
-                </TableSortLabel>
-              </TableCell>
-              <TableCell sortDirection={sortBy === "createdAt" ? sortDir : undefined}>
-                <TableSortLabel
-                  active={sortBy === "createdAt"}
-                  direction={sortBy === "createdAt" ? sortDir : undefined}
-                  onClick={() => handleSortClick("createdAt")}
-                >
-                  Date Applied
-                </TableSortLabel>
-              </TableCell>
-              <TableCell sortDirection={sortBy === "lastUpdated" ? sortDir : undefined}>
-                <TableSortLabel
-                  active={sortBy === "lastUpdated"}
-                  direction={sortBy === "lastUpdated" ? sortDir : undefined}
-                  onClick={() => handleSortClick("lastUpdated")}
-                >
-                  Last Response
-                </TableSortLabel>
-              </TableCell>
-              <TableCell sortDirection={sortBy === "status" ? sortDir : undefined}>
-                <TableSortLabel
-                  active={sortBy === "status"}
-                  direction={sortBy === "status" ? sortDir : undefined}
-                  onClick={() => handleSortClick("status")}
-                >
-                  Status
-                </TableSortLabel>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          {children}
+          <ApplicationsTableHead
+            sortBy={sortBy}
+            sortDir={sortDir}
+            handleSortDirChange={handleSortDirChange}
+            handleSortByChange={handleSortByChange}
+          />
+          <TableBody>
+            {applications.map((application) => (
+              <ApplicationsTableRow key={application.id} application={application} />
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
+      <ApplicationsTablePagination page={page} perPage={perPage} count={count} handlePageChange={handlePageChange} />
       <Backdrop open={isPending} />
     </>
   );

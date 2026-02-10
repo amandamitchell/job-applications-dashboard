@@ -1,19 +1,5 @@
 import ApplicationForm from "@/components/shared/ApplicationForm";
-import {
-  Box,
-  Button,
-  Chip,
-  Container,
-  Divider,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Paper, Typography } from "@mui/material";
 
 const NewApplication = () => {
   return (
