@@ -5,6 +5,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Chip } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 type StatusChipProps = {
   status: Status;
@@ -24,7 +25,18 @@ const StatusChip = ({ status, size = "medium" }: StatusChipProps) => {
     return <Chip size={size} label={statusLabel(status)} color="success" icon={<CheckCircleIcon />} />;
   }
 
-  if (status === Status.REJECTED || status === Status.WITHDRAWN || status === Status.CLOSED) {
+  if (
+    status === Status.AUTO_REJECTED ||
+    status === Status.WITHDRAWN ||
+    status === Status.CLOSED ||
+    status === Status.GHOSTED
+  ) {
+    return (
+      <Chip size={size} label={statusLabel(status)} icon={<CancelIcon />} color="primary" sx={{ bgcolor: grey[600] }} />
+    );
+  }
+
+  if (status === Status.REJECTED) {
     return <Chip size={size} label={statusLabel(status)} color="error" icon={<CancelIcon />} />;
   }
 

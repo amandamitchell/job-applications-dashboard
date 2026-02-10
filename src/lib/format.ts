@@ -84,8 +84,12 @@ export function statusLabel(status: Status) {
       return "Offer Accepted";
     case Status.APPLIED:
       return "Application Submitted";
+    case Status.AUTO_REJECTED:
+      return "Auto Rejected";
     case Status.CLOSED:
       return "Position Closed";
+    case Status.GHOSTED:
+      return "Ghosted";
     case Status.INTERVIEWING:
       return "Interviewing";
     case Status.OFFERED:
@@ -107,6 +111,8 @@ export function eventTypeLabel(eventType: EventType) {
   switch (eventType) {
     case EventType.APPLICATION:
       return "Applied";
+    case EventType.AUTO_REJECTION:
+      return "Auto Rejection";
     case EventType.FOLLOW_UP:
       return "Follow Up (Them)";
     case EventType.FOLLOW_UP_SELF:

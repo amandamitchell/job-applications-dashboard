@@ -35,15 +35,11 @@ const EventForm = ({ applicationId, event = null }: EventFormProps) => {
               label="Event Type"
               defaultValue={state.data?.type}
             >
-              <MenuItem value={EventType.APPLICATION}>{eventTypeLabel(EventType.APPLICATION)}</MenuItem>
-              <MenuItem value={EventType.RECRUITER}>{eventTypeLabel(EventType.RECRUITER)}</MenuItem>
-              <MenuItem value={EventType.INTERVIEW}>{eventTypeLabel(EventType.INTERVIEW)}</MenuItem>
-              <MenuItem value={EventType.SCHEDULE_REQUEST}>{eventTypeLabel(EventType.SCHEDULE_REQUEST)}</MenuItem>
-              <MenuItem value={EventType.FOLLOW_UP}>{eventTypeLabel(EventType.FOLLOW_UP)}</MenuItem>
-              <MenuItem value={EventType.FOLLOW_UP_SELF}>{eventTypeLabel(EventType.FOLLOW_UP_SELF)}</MenuItem>
-              <MenuItem value={EventType.OFFER}>{eventTypeLabel(EventType.OFFER)}</MenuItem>
-              <MenuItem value={EventType.REJECTION}>{eventTypeLabel(EventType.REJECTION)}</MenuItem>
-              <MenuItem value={EventType.WITHDRAWAL}>{eventTypeLabel(EventType.WITHDRAWAL)}</MenuItem>
+              {Object.keys(EventType).map((eventType) => (
+                <MenuItem value={eventType} key={eventType}>
+                  {eventTypeLabel(eventType as EventType)}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
@@ -58,13 +54,11 @@ const EventForm = ({ applicationId, event = null }: EventFormProps) => {
               defaultValue={state.data?.interviewType || undefined}
             >
               <MenuItem>Select Interview Type</MenuItem>
-              <MenuItem value={InterviewType.AUTO_CODE}>{interviewTypeLabel(InterviewType.AUTO_CODE)}</MenuItem>
-              <MenuItem value={InterviewType.LIVE_CODE}>{interviewTypeLabel(InterviewType.LIVE_CODE)}</MenuItem>
-              <MenuItem value={InterviewType.MANAGER}>{interviewTypeLabel(InterviewType.MANAGER)}</MenuItem>
-              <MenuItem value={InterviewType.PRODUCT}>{interviewTypeLabel(InterviewType.PRODUCT)}</MenuItem>
-              <MenuItem value={InterviewType.RECRUITER}>{interviewTypeLabel(InterviewType.RECRUITER)}</MenuItem>
-              <MenuItem value={InterviewType.TAKE_HOME}>{interviewTypeLabel(InterviewType.TAKE_HOME)}</MenuItem>
-              <MenuItem value={InterviewType.TECH}>{interviewTypeLabel(InterviewType.TECH)}</MenuItem>
+              {Object.keys(InterviewType).map((interviewType) => (
+                <MenuItem value={interviewType} key={interviewType}>
+                  {interviewTypeLabel(interviewType as InterviewType)}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>

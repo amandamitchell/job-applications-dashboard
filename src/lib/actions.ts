@@ -239,6 +239,8 @@ export async function saveEvent(
           newApplicationData.status = Status.INTERVIEWING;
         } else if (newData.type === EventType.REJECTION) {
           newApplicationData.status = Status.REJECTED;
+        } else if (newData.type === EventType.AUTO_REJECTION) {
+          newApplicationData.status = Status.AUTO_REJECTED;
         } else if (newData.type === EventType.WITHDRAWAL) {
           newApplicationData.status = Status.WITHDRAWN;
         } else if (newData.type === EventType.OFFER) {

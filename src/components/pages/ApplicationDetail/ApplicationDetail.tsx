@@ -141,6 +141,7 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
                             {event.type === EventType.FOLLOW_UP_SELF && <ReplyIcon color="primary" />}
                             {event.type === EventType.OFFER && <CelebrationIcon color="secondary" />}
                             {event.type === EventType.REJECTION && <CancelIcon color="secondary" />}
+                            {event.type === EventType.AUTO_REJECTION && <CancelIcon color="secondary" />}
                             {event.type === EventType.WITHDRAWAL && <CancelIcon color="primary" />}
                           </TableCell>
                           <TableCell>{event.createdAt.toDateString()}</TableCell>

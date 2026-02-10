@@ -4,7 +4,7 @@ import { Status } from "@/generated/prisma/enums";
 import { ApplicationListData } from "@/lib/actions";
 import { formatRecruiterInfo } from "@/lib/format";
 import { Link, TableCell, TableRow } from "@mui/material";
-import { amber, red } from "@mui/material/colors";
+import { amber, grey, red } from "@mui/material/colors";
 
 type ApplicationsTableRowProps = {
   application: ApplicationListData[number];
@@ -14,8 +14,11 @@ const ApplicationsTableRow = ({ application }: ApplicationsTableRowProps) => {
   const getColor = () => {
     switch (application.status) {
       case Status.CLOSED:
-      case Status.REJECTED:
+      case Status.AUTO_REJECTED:
       case Status.WITHDRAWN:
+      case Status.GHOSTED:
+        return grey[300];
+      case Status.REJECTED:
         return red[100];
       case Status.INTERVIEWING:
       case Status.RECRUITER_SUBMIT:
