@@ -175,6 +175,8 @@ export async function saveEvent(
   const createdAtInput = data.get("createdAt")?.toString() || null;
   const createdAt = formFieldToDate(createdAtInput);
 
+  const isNew = !Boolean(id);
+
   const newData = {
     type,
     interviewType,
@@ -186,7 +188,7 @@ export async function saveEvent(
     if (!applicationId) {
       throw new Error("Missing application id");
     }
-    if (id) {
+    if (!isNew) {
       if (!applicationId || !id) {
         throw new Error("Missing id");
       }
@@ -212,6 +214,53 @@ export async function saveEvent(
       } as EventDetailData,
       message: (error as Error).message || "An error occurred",
     };
+  }
+
+  if (isNew) {
+    try {
+      const application = await prisma.application.findUnique({
+        where: { id: parseInt(applicationId) },
+        select: {
+          status: true,
+          lastUpdated: true,
+        },
+      });
+
+      if (application) {
+        const newApplicationData: { lastUpdated?: Date; status?: Status } = {};
+        if (newData.createdAt > application.lastUpdated) {
+          newApplicationData.lastUpdated = newData.createdAt;
+        }
+        if (newData.type === EventType.APPLICATION && application.status !== Status.APPLIED) {
+          newApplicationData.status = Status.APPLIED;
+        } else if (newData.type === EventType.RECRUITER) {
+          newApplicationData.status = Status.RECRUITER_CONVO;
+        } else if (newData.type === EventType.INTERVIEW || newData.type === EventType.SCHEDULE_REQUEST) {
+          newApplicationData.status = Status.INTERVIEWING;
+        } else if (newData.type === EventType.REJECTION) {
+          newApplicationData.status = Status.REJECTED;
+        } else if (newData.type === EventType.WITHDRAWAL) {
+          newApplicationData.status = Status.WITHDRAWN;
+        } else if (newData.type === EventType.OFFER) {
+          newApplicationData.status = Status.OFFERED;
+        }
+        if (newApplicationData.lastUpdated || newApplicationData.status) {
+          await prisma.application.update({
+            where: { id: parseInt(applicationId) },
+            data: newApplicationData,
+          });
+        }
+      }
+    } catch (error: unknown) {
+      console.log("Error in createEvent:", error);
+      return {
+        data: {
+          ...previousState.data,
+          ...newData,
+        } as EventDetailData,
+        message: (error as Error).message || "An error occurred",
+      };
+    }
   }
 
   redirect(`/application/${applicationId}`);
