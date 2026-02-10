@@ -27,6 +27,8 @@ export async function getApplications({ sortDir }: { sortDir?: SortOrder }) {
       id: true,
       employer: true,
       title: true,
+      recruiter: true,
+      recruitingCo: true,
       createdAt: true,
       status: true,
       events: {
@@ -72,6 +74,8 @@ export async function saveApplication(
   let id = data.get("id")?.toString() || null;
   const employer = data.get("employer")?.toString() || null;
   const title = data.get("title")?.toString() || null;
+  const recruitingCo = data.get("recruiting-company")?.toString() || null;
+  const recruiter = data.get("recruiter")?.toString() || null;
   const employmentType = (data.get("employment-type")?.toString() as EmploymentType) || null;
   const locationType = (data.get("location-type")?.toString() as LocationType) || null;
   const location = data.get("location")?.toString() || null;
@@ -95,6 +99,8 @@ export async function saveApplication(
   const newData = {
     employer,
     title,
+    recruitingCo,
+    recruiter,
     createdAt,
     employmentType,
     location,

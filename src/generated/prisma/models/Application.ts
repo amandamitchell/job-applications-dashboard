@@ -43,6 +43,8 @@ export type ApplicationMinAggregateOutputType = {
   createdAt: Date | null
   employer: string | null
   title: string | null
+  recruitingCo: string | null
+  recruiter: string | null
   status: $Enums.Status | null
   employmentType: $Enums.EmploymentType | null
   locationType: $Enums.LocationType | null
@@ -62,6 +64,8 @@ export type ApplicationMaxAggregateOutputType = {
   createdAt: Date | null
   employer: string | null
   title: string | null
+  recruitingCo: string | null
+  recruiter: string | null
   status: $Enums.Status | null
   employmentType: $Enums.EmploymentType | null
   locationType: $Enums.LocationType | null
@@ -81,6 +85,8 @@ export type ApplicationCountAggregateOutputType = {
   createdAt: number
   employer: number
   title: number
+  recruitingCo: number
+  recruiter: number
   status: number
   employmentType: number
   locationType: number
@@ -114,6 +120,8 @@ export type ApplicationMinAggregateInputType = {
   createdAt?: true
   employer?: true
   title?: true
+  recruitingCo?: true
+  recruiter?: true
   status?: true
   employmentType?: true
   locationType?: true
@@ -133,6 +141,8 @@ export type ApplicationMaxAggregateInputType = {
   createdAt?: true
   employer?: true
   title?: true
+  recruitingCo?: true
+  recruiter?: true
   status?: true
   employmentType?: true
   locationType?: true
@@ -152,6 +162,8 @@ export type ApplicationCountAggregateInputType = {
   createdAt?: true
   employer?: true
   title?: true
+  recruitingCo?: true
+  recruiter?: true
   status?: true
   employmentType?: true
   locationType?: true
@@ -258,6 +270,8 @@ export type ApplicationGroupByOutputType = {
   createdAt: Date
   employer: string | null
   title: string | null
+  recruitingCo: string | null
+  recruiter: string | null
   status: $Enums.Status
   employmentType: $Enums.EmploymentType | null
   locationType: $Enums.LocationType | null
@@ -300,6 +314,8 @@ export type ApplicationWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   employer?: Prisma.StringNullableFilter<"Application"> | string | null
   title?: Prisma.StringNullableFilter<"Application"> | string | null
+  recruitingCo?: Prisma.StringNullableFilter<"Application"> | string | null
+  recruiter?: Prisma.StringNullableFilter<"Application"> | string | null
   status?: Prisma.EnumStatusFilter<"Application"> | $Enums.Status
   employmentType?: Prisma.EnumEmploymentTypeNullableFilter<"Application"> | $Enums.EmploymentType | null
   locationType?: Prisma.EnumLocationTypeNullableFilter<"Application"> | $Enums.LocationType | null
@@ -320,6 +336,8 @@ export type ApplicationOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   employer?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
+  recruitingCo?: Prisma.SortOrderInput | Prisma.SortOrder
+  recruiter?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   employmentType?: Prisma.SortOrderInput | Prisma.SortOrder
   locationType?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -343,6 +361,8 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   employer?: Prisma.StringNullableFilter<"Application"> | string | null
   title?: Prisma.StringNullableFilter<"Application"> | string | null
+  recruitingCo?: Prisma.StringNullableFilter<"Application"> | string | null
+  recruiter?: Prisma.StringNullableFilter<"Application"> | string | null
   status?: Prisma.EnumStatusFilter<"Application"> | $Enums.Status
   employmentType?: Prisma.EnumEmploymentTypeNullableFilter<"Application"> | $Enums.EmploymentType | null
   locationType?: Prisma.EnumLocationTypeNullableFilter<"Application"> | $Enums.LocationType | null
@@ -363,6 +383,8 @@ export type ApplicationOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   employer?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
+  recruitingCo?: Prisma.SortOrderInput | Prisma.SortOrder
+  recruiter?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   employmentType?: Prisma.SortOrderInput | Prisma.SortOrder
   locationType?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -390,6 +412,8 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
   employer?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   title?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
+  recruitingCo?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
+  recruiter?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   status?: Prisma.EnumStatusWithAggregatesFilter<"Application"> | $Enums.Status
   employmentType?: Prisma.EnumEmploymentTypeNullableWithAggregatesFilter<"Application"> | $Enums.EmploymentType | null
   locationType?: Prisma.EnumLocationTypeNullableWithAggregatesFilter<"Application"> | $Enums.LocationType | null
@@ -408,6 +432,8 @@ export type ApplicationCreateInput = {
   createdAt?: Date | string
   employer?: string | null
   title?: string | null
+  recruitingCo?: string | null
+  recruiter?: string | null
   status?: $Enums.Status
   employmentType?: $Enums.EmploymentType | null
   locationType?: $Enums.LocationType | null
@@ -428,6 +454,8 @@ export type ApplicationUncheckedCreateInput = {
   createdAt?: Date | string
   employer?: string | null
   title?: string | null
+  recruitingCo?: string | null
+  recruiter?: string | null
   status?: $Enums.Status
   employmentType?: $Enums.EmploymentType | null
   locationType?: $Enums.LocationType | null
@@ -447,6 +475,8 @@ export type ApplicationUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recruitingCo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recruiter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   employmentType?: Prisma.NullableEnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType | null
   locationType?: Prisma.NullableEnumLocationTypeFieldUpdateOperationsInput | $Enums.LocationType | null
@@ -467,6 +497,8 @@ export type ApplicationUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recruitingCo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recruiter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   employmentType?: Prisma.NullableEnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType | null
   locationType?: Prisma.NullableEnumLocationTypeFieldUpdateOperationsInput | $Enums.LocationType | null
@@ -487,6 +519,8 @@ export type ApplicationCreateManyInput = {
   createdAt?: Date | string
   employer?: string | null
   title?: string | null
+  recruitingCo?: string | null
+  recruiter?: string | null
   status?: $Enums.Status
   employmentType?: $Enums.EmploymentType | null
   locationType?: $Enums.LocationType | null
@@ -505,6 +539,8 @@ export type ApplicationUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recruitingCo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recruiter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   employmentType?: Prisma.NullableEnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType | null
   locationType?: Prisma.NullableEnumLocationTypeFieldUpdateOperationsInput | $Enums.LocationType | null
@@ -524,6 +560,8 @@ export type ApplicationUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recruitingCo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recruiter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   employmentType?: Prisma.NullableEnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType | null
   locationType?: Prisma.NullableEnumLocationTypeFieldUpdateOperationsInput | $Enums.LocationType | null
@@ -543,6 +581,8 @@ export type ApplicationCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   employer?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  recruitingCo?: Prisma.SortOrder
+  recruiter?: Prisma.SortOrder
   status?: Prisma.SortOrder
   employmentType?: Prisma.SortOrder
   locationType?: Prisma.SortOrder
@@ -568,6 +608,8 @@ export type ApplicationMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   employer?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  recruitingCo?: Prisma.SortOrder
+  recruiter?: Prisma.SortOrder
   status?: Prisma.SortOrder
   employmentType?: Prisma.SortOrder
   locationType?: Prisma.SortOrder
@@ -587,6 +629,8 @@ export type ApplicationMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   employer?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  recruitingCo?: Prisma.SortOrder
+  recruiter?: Prisma.SortOrder
   status?: Prisma.SortOrder
   employmentType?: Prisma.SortOrder
   locationType?: Prisma.SortOrder
@@ -678,6 +722,8 @@ export type ApplicationCreateWithoutEventsInput = {
   createdAt?: Date | string
   employer?: string | null
   title?: string | null
+  recruitingCo?: string | null
+  recruiter?: string | null
   status?: $Enums.Status
   employmentType?: $Enums.EmploymentType | null
   locationType?: $Enums.LocationType | null
@@ -697,6 +743,8 @@ export type ApplicationUncheckedCreateWithoutEventsInput = {
   createdAt?: Date | string
   employer?: string | null
   title?: string | null
+  recruitingCo?: string | null
+  recruiter?: string | null
   status?: $Enums.Status
   employmentType?: $Enums.EmploymentType | null
   locationType?: $Enums.LocationType | null
@@ -731,6 +779,8 @@ export type ApplicationUpdateWithoutEventsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recruitingCo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recruiter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   employmentType?: Prisma.NullableEnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType | null
   locationType?: Prisma.NullableEnumLocationTypeFieldUpdateOperationsInput | $Enums.LocationType | null
@@ -750,6 +800,8 @@ export type ApplicationUncheckedUpdateWithoutEventsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recruitingCo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recruiter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   employmentType?: Prisma.NullableEnumEmploymentTypeFieldUpdateOperationsInput | $Enums.EmploymentType | null
   locationType?: Prisma.NullableEnumLocationTypeFieldUpdateOperationsInput | $Enums.LocationType | null
@@ -800,6 +852,8 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   createdAt?: boolean
   employer?: boolean
   title?: boolean
+  recruitingCo?: boolean
+  recruiter?: boolean
   status?: boolean
   employmentType?: boolean
   locationType?: boolean
@@ -821,6 +875,8 @@ export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   employer?: boolean
   title?: boolean
+  recruitingCo?: boolean
+  recruiter?: boolean
   status?: boolean
   employmentType?: boolean
   locationType?: boolean
@@ -840,6 +896,8 @@ export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   createdAt?: boolean
   employer?: boolean
   title?: boolean
+  recruitingCo?: boolean
+  recruiter?: boolean
   status?: boolean
   employmentType?: boolean
   locationType?: boolean
@@ -859,6 +917,8 @@ export type ApplicationSelectScalar = {
   createdAt?: boolean
   employer?: boolean
   title?: boolean
+  recruitingCo?: boolean
+  recruiter?: boolean
   status?: boolean
   employmentType?: boolean
   locationType?: boolean
@@ -873,7 +933,7 @@ export type ApplicationSelectScalar = {
   resume?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "employer" | "title" | "status" | "employmentType" | "locationType" | "location" | "compStart" | "compEnd" | "compType" | "keySkills" | "yoe" | "notes" | "searchSource" | "resume", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt" | "employer" | "title" | "recruitingCo" | "recruiter" | "status" | "employmentType" | "locationType" | "location" | "compStart" | "compEnd" | "compType" | "keySkills" | "yoe" | "notes" | "searchSource" | "resume", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   events?: boolean | Prisma.Application$eventsArgs<ExtArgs>
   _count?: boolean | Prisma.ApplicationCountOutputTypeDefaultArgs<ExtArgs>
@@ -891,6 +951,8 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     createdAt: Date
     employer: string | null
     title: string | null
+    recruitingCo: string | null
+    recruiter: string | null
     status: $Enums.Status
     employmentType: $Enums.EmploymentType | null
     locationType: $Enums.LocationType | null
@@ -1331,6 +1393,8 @@ export interface ApplicationFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Application", 'DateTime'>
   readonly employer: Prisma.FieldRef<"Application", 'String'>
   readonly title: Prisma.FieldRef<"Application", 'String'>
+  readonly recruitingCo: Prisma.FieldRef<"Application", 'String'>
+  readonly recruiter: Prisma.FieldRef<"Application", 'String'>
   readonly status: Prisma.FieldRef<"Application", 'Status'>
   readonly employmentType: Prisma.FieldRef<"Application", 'EmploymentType'>
   readonly locationType: Prisma.FieldRef<"Application", 'LocationType'>

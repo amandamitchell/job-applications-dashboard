@@ -76,6 +76,8 @@ export const ApplicationScalarFieldEnum = {
   createdAt: 'createdAt',
   employer: 'employer',
   title: 'title',
+  recruitingCo: 'recruitingCo',
+  recruiter: 'recruiter',
   status: 'status',
   employmentType: 'employmentType',
   locationType: 'locationType',

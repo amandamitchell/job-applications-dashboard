@@ -54,6 +54,7 @@ const ApplicationsList = ({ applications, sortDir, sortBy }: ApplicationsListPro
           <TableRow>
             <TableCell>Employer</TableCell>
             <TableCell>Title</TableCell>
+            <TableCell>3rd Party Recruiter</TableCell>
             <TableCell sortDirection={sortBy === "createdAt" ? sortDir : undefined}>
               <TableSortLabel
                 active={sortBy === "createdAt"}
@@ -80,6 +81,17 @@ const ApplicationsList = ({ applications, sortDir, sortBy }: ApplicationsListPro
                 <Link component={NextLink} href={`/application/${application.id}`}>
                   {application.title}
                 </Link>
+              </TableCell>
+              <TableCell>
+                {(!!application.recruiter || !!application.recruitingCo) && (
+                  <Link component={NextLink} href={`/application/${application.id}`}>
+                    {!!application.recruiter && !application.recruitingCo && application.recruiter}
+                    {!!application.recruitingCo && !application.recruiter && application.recruitingCo}
+                    {!!application.recruitingCo &&
+                      !!application.recruiter &&
+                      `${application.recruiter} at ${application.recruitingCo}`}
+                  </Link>
+                )}
               </TableCell>
               <TableCell>{application.createdAt.toLocaleDateString()}</TableCell>
               <TableCell>{application.events[0]?.createdAt.toLocaleDateString()}</TableCell>

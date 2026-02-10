@@ -77,6 +77,8 @@ export function statusLabel(status: Status) {
       return "Interviewing";
     case Status.OFFERED:
       return "Received Offer";
+    case Status.RECRUITER:
+      return "Recruiter Discussion";
     case Status.REJECTED:
       return "Rejected";
     case Status.WITHDRAWN:
@@ -98,6 +100,8 @@ export function eventTypeLabel(eventType: EventType) {
       return "Interview";
     case EventType.OFFER:
       return "Offer";
+    case EventType.RECRUITER:
+      return "Recruiter Contact";
     case EventType.REJECTION:
       return "Rejection";
     case EventType.SCHEDULE_REQUEST:

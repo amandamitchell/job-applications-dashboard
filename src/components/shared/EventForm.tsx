@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import NextLink from "@/components/shared/NextLink";
 import { EventType, InterviewType } from "@/generated/prisma/enums";
 import { EventDetailData, saveEvent } from "@/lib/actions";
-import { dateToFormField, interviewTypeLabel } from "@/lib/format";
+import { dateToFormField, eventTypeLabel, interviewTypeLabel } from "@/lib/format";
 import { Alert, Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField } from "@mui/material";
 
 type EventFormProps = {
@@ -35,14 +35,15 @@ const EventForm = ({ applicationId, event = null }: EventFormProps) => {
               label="Event Type"
               defaultValue={state.data?.type}
             >
-              <MenuItem value={EventType.APPLICATION}>Application</MenuItem>
-              <MenuItem value={EventType.INTERVIEW}>Interview</MenuItem>
-              <MenuItem value={EventType.SCHEDULE_REQUEST}>Schedule Request</MenuItem>
-              <MenuItem value={EventType.FOLLOW_UP}>Follow Up (Them)</MenuItem>
-              <MenuItem value={EventType.FOLLOW_UP_SELF}>Follow Up (Me)</MenuItem>
-              <MenuItem value={EventType.OFFER}>Offer</MenuItem>
-              <MenuItem value={EventType.REJECTION}>Rejection</MenuItem>
-              <MenuItem value={EventType.WITHDRAWAL}>Withdrawal</MenuItem>
+              <MenuItem value={EventType.APPLICATION}>{eventTypeLabel(EventType.APPLICATION)}</MenuItem>
+              <MenuItem value={EventType.RECRUITER}>{eventTypeLabel(EventType.RECRUITER)}</MenuItem>
+              <MenuItem value={EventType.INTERVIEW}>{eventTypeLabel(EventType.INTERVIEW)}</MenuItem>
+              <MenuItem value={EventType.SCHEDULE_REQUEST}>{eventTypeLabel(EventType.SCHEDULE_REQUEST)}</MenuItem>
+              <MenuItem value={EventType.FOLLOW_UP}>{eventTypeLabel(EventType.FOLLOW_UP)}</MenuItem>
+              <MenuItem value={EventType.FOLLOW_UP_SELF}>{eventTypeLabel(EventType.FOLLOW_UP_SELF)}</MenuItem>
+              <MenuItem value={EventType.OFFER}>{eventTypeLabel(EventType.OFFER)}</MenuItem>
+              <MenuItem value={EventType.REJECTION}>{eventTypeLabel(EventType.REJECTION)}</MenuItem>
+              <MenuItem value={EventType.WITHDRAWAL}>{eventTypeLabel(EventType.WITHDRAWAL)}</MenuItem>
             </Select>
           </FormControl>
         </Grid>

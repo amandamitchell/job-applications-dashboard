@@ -35,6 +35,7 @@ export type CompType = (typeof CompType)[keyof typeof CompType]
 
 
 export const Status = {
+  RECRUITER: 'RECRUITER',
   APPLIED: 'APPLIED',
   INTERVIEWING: 'INTERVIEWING',
   OFFERED: 'OFFERED',
@@ -49,6 +50,7 @@ export type Status = (typeof Status)[keyof typeof Status]
 
 export const EventType = {
   APPLICATION: 'APPLICATION',
+  RECRUITER: 'RECRUITER',
   INTERVIEW: 'INTERVIEW',
   SCHEDULE_REQUEST: 'SCHEDULE_REQUEST',
   FOLLOW_UP: 'FOLLOW_UP',

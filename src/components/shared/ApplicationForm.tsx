@@ -1,11 +1,11 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import NextLink from "@/components/shared/NextLink";
 import { CompType, EmploymentType, LocationType, ResumeVersion, SearchSource, Status } from "@/generated/prisma/enums";
 import { ApplicationDetailData } from "@/lib/actions";
 import { saveApplication } from "@/lib/actions";
-import { dateToFormField } from "@/lib/format";
+import { dateToFormField, statusLabel } from "@/lib/format";
 import {
   Alert,
   Button,
@@ -65,6 +65,26 @@ const ApplicationForm = ({ application = null }: ApplicationFormProps) => {
             disabled={isPending}
           />
         </Grid>
+        <Grid size={{ xs: 12, md: 9 }}>
+          <TextField
+            label="Recruiting Company"
+            fullWidth
+            name="recruiting-company"
+            id="recruiting-company"
+            defaultValue={state.data?.recruitingCo}
+            disabled={isPending}
+          />
+        </Grid>
+        <Grid size={{ xs: 12, md: 9 }}>
+          <TextField
+            label="Recruiter Name"
+            fullWidth
+            name="recruiter"
+            id="recruiter"
+            defaultValue={state.data?.recruiter}
+            disabled={isPending}
+          />
+        </Grid>
         <Grid size={{ xs: 9, md: 6 }}>
           <TextField
             label="Date Applied"
@@ -87,13 +107,14 @@ const ApplicationForm = ({ application = null }: ApplicationFormProps) => {
               defaultValue={state.data?.status || Status.APPLIED}
               sx={{ minWidth: "15rem" }}
             >
-              <MenuItem value={Status.APPLIED}>Applied</MenuItem>
-              <MenuItem value={Status.INTERVIEWING}>Interviewing</MenuItem>
-              <MenuItem value={Status.REJECTED}>Rejected</MenuItem>
-              <MenuItem value={Status.WITHDRAWN}>Withdrawn</MenuItem>
-              <MenuItem value={Status.CLOSED}>Closed</MenuItem>
-              <MenuItem value={Status.OFFERED}>Received Offer</MenuItem>
-              <MenuItem value={Status.ACCEPTED}>Offer Accepted</MenuItem>
+              <MenuItem value={Status.APPLIED}>{statusLabel(Status.APPLIED)}</MenuItem>
+              <MenuItem value={Status.RECRUITER}>{statusLabel(Status.RECRUITER)}</MenuItem>
+              <MenuItem value={Status.INTERVIEWING}>{statusLabel(Status.INTERVIEWING)}</MenuItem>
+              <MenuItem value={Status.REJECTED}>{statusLabel(Status.REJECTED)}</MenuItem>
+              <MenuItem value={Status.WITHDRAWN}>{statusLabel(Status.WITHDRAWN)}</MenuItem>
+              <MenuItem value={Status.CLOSED}>{statusLabel(Status.CLOSED)}</MenuItem>
+              <MenuItem value={Status.OFFERED}>{statusLabel(Status.OFFERED)}</MenuItem>
+              <MenuItem value={Status.ACCEPTED}>{statusLabel(Status.ACCEPTED)}</MenuItem>
             </Select>
           </FormControl>
         </Grid>
