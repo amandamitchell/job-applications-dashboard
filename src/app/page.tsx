@@ -1,6 +1,8 @@
+import { Suspense } from "react";
+import ApplicationsTableBodyRSC from "@/components/pages/Home/ApplicationsTable/ApplicationsTableBody.server";
+import ApplicationsTableBodySkeleton from "@/components/pages/Home/ApplicationsTable/ApplicationsTableBodySkeleton";
 import Home from "@/components/pages/Home/Home";
 import { SortOrder } from "@/generated/prisma/internal/prismaNamespace";
-import { getApplications } from "@/lib/actions";
 
 export default async function HomePage({
   searchParams,
@@ -9,12 +11,16 @@ export default async function HomePage({
     sortDir: SortOrder | undefined;
   }>;
 }) {
-  const { sortDir } = await searchParams;
+  let { sortDir } = await searchParams;
+  if (!sortDir) sortDir = "desc";
 
   const sortBy = "createdAt";
-  const applications = await getApplications({
-    sortDir,
-  });
 
-  return <Home applications={applications} sortDir={sortDir} sortBy={sortBy} />;
+  return (
+    <Home sortBy={sortBy} sortDir={sortDir}>
+      <Suspense fallback={<ApplicationsTableBodySkeleton />}>
+        <ApplicationsTableBodyRSC sortBy={sortBy} sortDir={sortDir} />
+      </Suspense>
+    </Home>
+  );
 }

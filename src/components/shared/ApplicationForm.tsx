@@ -107,14 +107,11 @@ const ApplicationForm = ({ application = null }: ApplicationFormProps) => {
               defaultValue={state.data?.status || Status.APPLIED}
               sx={{ minWidth: "15rem" }}
             >
-              <MenuItem value={Status.APPLIED}>{statusLabel(Status.APPLIED)}</MenuItem>
-              <MenuItem value={Status.RECRUITER}>{statusLabel(Status.RECRUITER)}</MenuItem>
-              <MenuItem value={Status.INTERVIEWING}>{statusLabel(Status.INTERVIEWING)}</MenuItem>
-              <MenuItem value={Status.REJECTED}>{statusLabel(Status.REJECTED)}</MenuItem>
-              <MenuItem value={Status.WITHDRAWN}>{statusLabel(Status.WITHDRAWN)}</MenuItem>
-              <MenuItem value={Status.CLOSED}>{statusLabel(Status.CLOSED)}</MenuItem>
-              <MenuItem value={Status.OFFERED}>{statusLabel(Status.OFFERED)}</MenuItem>
-              <MenuItem value={Status.ACCEPTED}>{statusLabel(Status.ACCEPTED)}</MenuItem>
+              {Object.keys(Status).map((s) => (
+                <MenuItem value={s} key={s}>
+                  {statusLabel(s as Status)}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>

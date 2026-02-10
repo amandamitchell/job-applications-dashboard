@@ -30,6 +30,19 @@ export function formFieldToDate(formInput: string | null | undefined): Date {
   return date;
 }
 
+export function formatRecruiterInfo({
+  recruiter,
+  recruitingCo,
+}: {
+  recruiter?: string | null;
+  recruitingCo?: string | null;
+}) {
+  if (recruiter && recruitingCo) return `${recruiter} at ${recruitingCo}`;
+  if (!recruiter && recruitingCo) return recruitingCo;
+  if (recruiter && !recruitingCo) return recruiter;
+  return null;
+}
+
 export function employmentTypeLabel(employmentType: EmploymentType) {
   switch (employmentType) {
     case EmploymentType.CONTRACT:
@@ -77,8 +90,10 @@ export function statusLabel(status: Status) {
       return "Interviewing";
     case Status.OFFERED:
       return "Received Offer";
-    case Status.RECRUITER:
-      return "Recruiter Discussion";
+    case Status.RECRUITER_CONVO:
+      return "Recruiter Conversation";
+    case Status.RECRUITER_SUBMIT:
+      return "Applied via Recruiter";
     case Status.REJECTED:
       return "Rejected";
     case Status.WITHDRAWN:

@@ -12,32 +12,20 @@ type StatusChipProps = {
 };
 
 const StatusChip = ({ status, size = "medium" }: StatusChipProps) => {
-  if (status === Status.APPLIED) {
-    return <Chip size={size} label={statusLabel(Status.APPLIED)} color="info" icon={<AddCircleIcon />} />;
+  if (status === Status.APPLIED || status === Status.RECRUITER_CONVO) {
+    return <Chip size={size} label={statusLabel(status)} color="info" icon={<AddCircleIcon />} />;
   }
 
-  if (status === Status.INTERVIEWING) {
-    return <Chip size={size} label={statusLabel(Status.INTERVIEWING)} color="warning" icon={<AccountCircleIcon />} />;
+  if (status === Status.INTERVIEWING || status === Status.RECRUITER_SUBMIT) {
+    return <Chip size={size} label={statusLabel(status)} color="warning" icon={<AccountCircleIcon />} />;
   }
 
-  if (status === Status.OFFERED) {
-    return <Chip size={size} label={statusLabel(Status.OFFERED)} color="success" icon={<CheckCircleIcon />} />;
+  if (status === Status.OFFERED || status === Status.ACCEPTED) {
+    return <Chip size={size} label={statusLabel(status)} color="success" icon={<CheckCircleIcon />} />;
   }
 
-  if (status === Status.REJECTED) {
-    return <Chip size={size} label={statusLabel(Status.REJECTED)} color="error" icon={<CancelIcon />} />;
-  }
-
-  if (status === Status.WITHDRAWN) {
-    return <Chip size={size} label={statusLabel(Status.WITHDRAWN)} color="error" icon={<CancelIcon />} />;
-  }
-
-  if (status === Status.ACCEPTED) {
-    return <Chip size={size} label={statusLabel(Status.ACCEPTED)} color="success" icon={<CheckCircleIcon />} />;
-  }
-
-  if (status === Status.CLOSED) {
-    return <Chip size={size} label={statusLabel(Status.CLOSED)} color="error" icon={<CancelIcon />} />;
+  if (status === Status.REJECTED || status === Status.WITHDRAWN || status === Status.CLOSED) {
+    return <Chip size={size} label={statusLabel(status)} color="error" icon={<CancelIcon />} />;
   }
 
   return <></>;

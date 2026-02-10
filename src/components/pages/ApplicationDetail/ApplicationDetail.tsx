@@ -6,6 +6,7 @@ import {
   compTypeLabel,
   employmentTypeLabel,
   eventTypeLabel,
+  formatRecruiterInfo,
   interviewTypeLabel,
   locationTypeLabel,
 } from "@/lib/format";
@@ -40,6 +41,11 @@ type ApplicationDetailProps = {
 };
 
 const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
+  const recrutierInfo = formatRecruiterInfo({
+    recruiter: application.recruiter,
+    recruitingCo: application.recruitingCo,
+  });
+
   return (
     <Box sx={{ bgcolor: "background.default", px: 3 }}>
       <Container
@@ -62,8 +68,13 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
                   </Typography>
                 )}
                 {!!application.title && (
-                  <Typography variant="h2" component="h2" sx={{ mb: 3 }}>
+                  <Typography variant="h2" component="h2" sx={{ mb: recrutierInfo ? 1 : 3 }}>
                     {application.title}
+                  </Typography>
+                )}
+                {!!recrutierInfo && (
+                  <Typography variant={application.title ? "h3" : "h2"} component="h2" sx={{ mb: 3 }}>
+                    {`via ${recrutierInfo}`}
                   </Typography>
                 )}
               </Box>

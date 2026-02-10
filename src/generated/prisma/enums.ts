@@ -35,7 +35,8 @@ export type CompType = (typeof CompType)[keyof typeof CompType]
 
 
 export const Status = {
-  RECRUITER: 'RECRUITER',
+  RECRUITER_CONVO: 'RECRUITER_CONVO',
+  RECRUITER_SUBMIT: 'RECRUITER_SUBMIT',
   APPLIED: 'APPLIED',
   INTERVIEWING: 'INTERVIEWING',
   OFFERED: 'OFFERED',

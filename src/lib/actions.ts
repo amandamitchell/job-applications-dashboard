@@ -117,8 +117,8 @@ export async function saveApplication(
   };
 
   try {
-    if (!employer && !title) {
-      throw new Error("Either employer or title are required");
+    if (!employer && !title && !recruiter && !recruitingCo) {
+      throw new Error("Employer, title, or recruiter information are required");
     }
     if (id) {
       await prisma.application.update({
