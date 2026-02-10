@@ -39,8 +39,9 @@ npm run dev
 ## Todo
 
 - [ ] More contract options: W2, 1099, Contract-to-hire
-- [ ] Associated recruiting company & recruiter name
+- [x] Associated recruiting company & recruiter name
 - [ ] Auto-update status when adding events
+- [ ] Auto-update last updated date when adding events
 - [ ] Pagination / filtering / sorting on main list
 - [ ] Stats view
 - [ ] Error and loading states

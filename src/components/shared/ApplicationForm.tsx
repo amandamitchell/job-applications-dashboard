@@ -32,6 +32,7 @@ const ApplicationForm = ({ application = null }: ApplicationFormProps) => {
   const [state, dispatch, isPending] = useActionState(saveApplication, { data: application, message: null });
 
   const createdAtInput = dateToFormField(state.data?.createdAt);
+  const lastUpdatedInput = dateToFormField(state.data?.lastUpdated);
 
   return (
     <form action={dispatch}>
@@ -93,6 +94,17 @@ const ApplicationForm = ({ application = null }: ApplicationFormProps) => {
             id="createdAt"
             type="date"
             defaultValue={createdAtInput}
+            disabled={isPending}
+          />
+        </Grid>
+        <Grid size={{ xs: 9, md: 6 }}>
+          <TextField
+            label="Last Updated"
+            fullWidth
+            name="lastUpdated"
+            id="lastUpdated"
+            type="date"
+            defaultValue={lastUpdatedInput}
             disabled={isPending}
           />
         </Grid>

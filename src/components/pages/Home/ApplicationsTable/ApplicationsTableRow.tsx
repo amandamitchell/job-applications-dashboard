@@ -48,7 +48,7 @@ const ApplicationsTableRow = ({ application }: ApplicationsTableRowProps) => {
         )}
       </TableCell>
       <TableCell>{application.createdAt.toLocaleDateString()}</TableCell>
-      <TableCell>{application.events[0]?.createdAt.toLocaleDateString()}</TableCell>
+      <TableCell>{application.lastUpdated.toLocaleDateString()}</TableCell>
       <TableCell>
         <StatusChip status={application.status} size="small" />
       </TableCell>

@@ -16,6 +16,7 @@ datasource db {
 model Application {
   id              Int             @id @default(autoincrement())
   createdAt       DateTime        @default(now())
+  lastUpdated     DateTime        @default(now())
   employer        String?
   title           String?
   recruitingCo    String?

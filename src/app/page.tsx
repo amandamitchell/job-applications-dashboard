@@ -3,18 +3,19 @@ import ApplicationsTableBodyRSC from "@/components/pages/Home/ApplicationsTable/
 import ApplicationsTableBodySkeleton from "@/components/pages/Home/ApplicationsTable/ApplicationsTableBodySkeleton";
 import Home from "@/components/pages/Home/Home";
 import { SortOrder } from "@/generated/prisma/internal/prismaNamespace";
+import { SortBy } from "@/types/types";
 
 export default async function HomePage({
   searchParams,
 }: {
   searchParams: Promise<{
     sortDir: SortOrder | undefined;
+    sortBy: SortBy | undefined;
   }>;
 }) {
-  let { sortDir } = await searchParams;
+  let { sortDir, sortBy } = await searchParams;
   if (!sortDir) sortDir = "desc";
-
-  const sortBy = "createdAt";
+  if (!sortBy) sortBy = "lastUpdated";
 
   return (
     <Home sortBy={sortBy} sortDir={sortDir}>

@@ -11,8 +11,9 @@ import {
   SearchSource,
   Status,
 } from "@/generated/prisma/enums";
-import { SortOrder } from "@/generated/prisma/internal/prismaNamespace";
+import { ApplicationOrderByWithRelationInput, SortOrder } from "@/generated/prisma/internal/prismaNamespace";
 import prisma from "@/lib/prisma";
+import { SortBy } from "@/types/types";
 import { formFieldToDate } from "./format";
 
 export type ApplicationDetailData = Awaited<ReturnType<typeof getApplication>>;
@@ -20,9 +21,12 @@ export type ApplicationBasicData = Awaited<ReturnType<typeof getApplicationBasic
 export type ApplicationListData = Awaited<ReturnType<typeof getApplications>>;
 export type EventDetailData = Awaited<ReturnType<typeof getEvent>>;
 
-export async function getApplications({ sortDir }: { sortDir?: SortOrder }) {
+export async function getApplications({ sortDir, sortBy }: { sortDir?: SortOrder; sortBy?: SortBy }) {
+  if (!sortDir) sortDir = "desc";
+  if (!sortBy) sortBy = "lastUpdated";
+
   const applications = await prisma.application.findMany({
-    orderBy: { createdAt: sortDir },
+    orderBy: { [sortBy]: sortDir },
     select: {
       id: true,
       employer: true,
@@ -30,17 +34,11 @@ export async function getApplications({ sortDir }: { sortDir?: SortOrder }) {
       recruiter: true,
       recruitingCo: true,
       createdAt: true,
+      lastUpdated: true,
       status: true,
-      events: {
-        take: 1,
-        orderBy: { createdAt: "desc" },
-        select: {
-          id: true,
-          createdAt: true,
-        },
-      },
     },
   });
+
   return applications;
 }
 
@@ -90,6 +88,9 @@ export async function saveApplication(
   const createdAtInput = data.get("createdAt")?.toString() || null;
   const createdAt = formFieldToDate(createdAtInput);
 
+  const lastUpdatedInput = data.get("lastUpdated")?.toString() || null;
+  const lastUpdated = formFieldToDate(lastUpdatedInput);
+
   const compStartInput = data.get("compensation-start")?.toString();
   const compStart = compStartInput ? parseFloat(compStartInput.replace(/[^0-9.]/g, "")) : null;
 
@@ -102,6 +103,7 @@ export async function saveApplication(
     recruitingCo,
     recruiter,
     createdAt,
+    lastUpdated,
     employmentType,
     location,
     locationType,
@@ -131,7 +133,7 @@ export async function saveApplication(
           ...newData,
           events: {
             create: {
-              type: EventType.APPLICATION,
+              type: recruiter ? EventType.RECRUITER : EventType.APPLICATION,
               createdAt,
             },
           },
