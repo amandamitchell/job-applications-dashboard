@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import NextLink from "@/components/shared/NextLink";
 import StatusChip from "@/components/shared/StatusChip";
 import { EventType } from "@/generated/prisma/enums";
@@ -9,6 +10,8 @@ import {
   formatRecruiterInfo,
   interviewTypeLabel,
   locationTypeLabel,
+  resumeVersionLabel,
+  searchSourceLabel,
 } from "@/lib/format";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -46,6 +49,39 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
     recruiter: application.recruiter,
     recruitingCo: application.recruitingCo,
   });
+
+  const timeSinceApplication = useMemo(() => {
+    const today = new Date();
+    const timeDiff = today.getTime() - application.createdAt.getTime();
+    const timeDiffDays = timeDiff / (1000 * 60 * 60 * 24);
+    return Math.ceil(timeDiffDays);
+  }, [application.createdAt]);
+
+  const timeSinceFirstResponse = useMemo(() => {
+    const firstResponse = application.events.filter(
+      (e) =>
+        e.type === EventType.AUTO_REJECTION ||
+        e.type === EventType.SCHEDULE_REQUEST ||
+        e.type === EventType.FOLLOW_UP ||
+        e.type === EventType.INTERVIEW,
+    );
+    if (firstResponse.length > 0) {
+      const today = new Date();
+      const timeDiff = today.getTime() - firstResponse[firstResponse.length - 1].createdAt.getTime();
+      const timeDiffDays = timeDiff / (1000 * 60 * 60 * 24);
+      return Math.ceil(timeDiffDays);
+    }
+    return null;
+  }, [application.events]);
+
+  const timeSinceLastAction = useMemo(() => {
+    if (application.events.length > 0) {
+      const today = new Date();
+      const timeDiff = today.getTime() - application.events[0].createdAt.getTime();
+      const timeDiffDays = timeDiff / (1000 * 60 * 60 * 24);
+      return Math.ceil(timeDiffDays);
+    }
+  }, [application.events]);
 
   return (
     <Box sx={{ bgcolor: "background.default", px: 3 }}>
@@ -183,6 +219,27 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
                   </Table>
                 </TableContainer>
               </>
+            )}
+            <Typography variant="h4" component="h3" gutterBottom sx={{ mt: 4 }}>
+              Stats
+            </Typography>
+            <Typography variant="body2" component="p" gutterBottom>
+              {!!application.searchSource && `Found through ${searchSourceLabel(application.searchSource)}`}
+              {`${application.searchSource ? `, applied` : `Applied`} on ${application.createdAt.toLocaleDateString()}`}
+              {!!application.resume && ` with resume ${resumeVersionLabel(application.resume)}`}.
+            </Typography>
+            <Typography variant="body2" component="p">
+              {`Applied ${timeSinceApplication} ${timeSinceApplication === 1 ? `day` : `days`} ago`}
+            </Typography>
+            {timeSinceFirstResponse !== null && (
+              <Typography variant="body2" component="p">
+                {`First response ${timeSinceFirstResponse} ${timeSinceFirstResponse === 1 ? `day` : `days`} ago - ${timeSinceApplication - timeSinceFirstResponse} day response time`}
+              </Typography>
+            )}
+            {timeSinceLastAction !== null && (
+              <Typography variant="body2" component="p">
+                {`Last activity ${timeSinceLastAction} ${timeSinceLastAction === 1 ? `day` : `days`} ago - ${timeSinceApplication - (timeSinceLastAction || 0)} day span`}
+              </Typography>
             )}
           </Box>
           <Box
