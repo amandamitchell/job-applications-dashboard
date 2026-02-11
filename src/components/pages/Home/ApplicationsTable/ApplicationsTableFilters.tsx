@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Status } from "@/generated/prisma/enums";
 import { statusLabel } from "@/lib/format";
@@ -28,11 +28,12 @@ type ApplicationsTableFiltersProps = {
 const ApplicationsTableFilters = ({ handleStatusChange, handleSearchQueryChange }: ApplicationsTableFiltersProps) => {
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
-
+  const [menuAnchorElem, setMenuAnchorElem] = useState<Element | null>(null);
   const filterButtonRef = useRef<HTMLButtonElement>(null);
-  const getAnchorElement = () => {
-    return filterButtonRef.current;
-  };
+
+  useEffect(() => {
+    setMenuAnchorElem(filterButtonRef.current);
+  }, []);
 
   const handleFilterButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -113,7 +114,7 @@ const ApplicationsTableFilters = ({ handleStatusChange, handleSearchQueryChange 
         >
           Filter
         </Button>
-        <Menu open={isOpen} anchorEl={getAnchorElement} onClose={handleClose}>
+        <Menu open={isOpen} anchorEl={menuAnchorElem} onClose={handleClose}>
           <ListSubheader>Status</ListSubheader>
           {Object.keys(Status).map((s) => (
             <MenuItem key={s} id={s} onClick={handleMenuClick} selected={searchParams.get("status") === s} dense>
