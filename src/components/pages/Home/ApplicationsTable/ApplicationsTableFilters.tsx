@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Status } from "@/generated/prisma/enums";
@@ -57,7 +59,7 @@ const ApplicationsTableFilters = ({ handleStatusChange, handleSearchQueryChange 
 
   return (
     <Box sx={{ mt: 1, mb: 2 }}>
-      <Stack direction="row" spacing={2} justifyContent="space-between">
+      <Stack direction="row" spacing={4}>
         <Stack direction="row" spacing={1}>
           <TextField
             size="small"
@@ -68,6 +70,7 @@ const ApplicationsTableFilters = ({ handleStatusChange, handleSearchQueryChange 
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setSearchQuery(e.currentTarget.value);
             }}
+            sx={{ bgcolor: "white" }}
           />
           <FormControl>
             <InputLabel id="search-field-label">Search Field</InputLabel>
@@ -77,23 +80,32 @@ const ApplicationsTableFilters = ({ handleStatusChange, handleSearchQueryChange 
               name="search-field"
               id="search-field"
               size="small"
-              defaultValue={searchField}
+              value={searchField}
               onChange={(e: SelectChangeEvent) => {
                 setSearchField(e.target.value);
               }}
+              sx={{ bgcolor: "white" }}
             >
-              <MenuItem value="employer">Employer</MenuItem>
-              <MenuItem value="title">Job Title</MenuItem>
-              <MenuItem value="recruiter">Recruiter Name</MenuItem>
-              <MenuItem value="recruitingCo">Recruiting Company</MenuItem>
+              <MenuItem value="employer" selected={searchField === "employer"}>
+                Employer
+              </MenuItem>
+              <MenuItem value="title" selected={searchField === "title"}>
+                Job Title
+              </MenuItem>
+              <MenuItem value="recruiter" selected={searchField === "recruiter"}>
+                Recruiter Name
+              </MenuItem>
+              <MenuItem value="recruitingCo" selected={searchField === "recruitingCo"}>
+                Recruiting Company
+              </MenuItem>
             </Select>
           </FormControl>
-          <Button variant="outlined" color="secondary" onClick={handleSearchButtonClick} startIcon={<SearchIcon />}>
+          <Button variant="contained" color="secondary" onClick={handleSearchButtonClick} startIcon={<SearchIcon />}>
             Search
           </Button>
         </Stack>
         <Button
-          variant="outlined"
+          variant="contained"
           color="secondary"
           ref={filterButtonRef}
           onClick={handleFilterButtonClick}
@@ -104,7 +116,7 @@ const ApplicationsTableFilters = ({ handleStatusChange, handleSearchQueryChange 
         <Menu open={isOpen} anchorEl={getAnchorElement} onClose={handleClose}>
           <ListSubheader>Status</ListSubheader>
           {Object.keys(Status).map((s) => (
-            <MenuItem key={s} id={s} onClick={handleMenuClick} selected={searchParams.get("status") === s}>
+            <MenuItem key={s} id={s} onClick={handleMenuClick} selected={searchParams.get("status") === s} dense>
               {statusLabel(s as Status)}
             </MenuItem>
           ))}

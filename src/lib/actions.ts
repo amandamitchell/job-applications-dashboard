@@ -57,8 +57,6 @@ export async function getApplications({
     };
   }
 
-  console.log("where", where);
-
   const applicationQuery = prisma.application.findMany({
     orderBy: { [sortBy]: sortDir },
     skip,

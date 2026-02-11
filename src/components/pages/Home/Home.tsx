@@ -1,4 +1,5 @@
 import NextLink from "@/components/shared/NextLink";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 
 const Home = ({ children }: React.PropsWithChildren) => {
@@ -17,7 +18,7 @@ const Home = ({ children }: React.PropsWithChildren) => {
           <Typography variant="h1" component="h1">
             Job Applications
           </Typography>
-          <Button variant="contained" component={NextLink} href="/application/new">
+          <Button variant="contained" component={NextLink} href="/application/new" startIcon={<AddCircleIcon />}>
             Add New
           </Button>
         </Stack>

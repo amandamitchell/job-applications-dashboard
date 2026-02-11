@@ -243,9 +243,9 @@ const ApplicationForm = ({ application = null }: ApplicationFormProps) => {
               id="search-source"
               name="search-source"
               label="Search Source"
-              defaultValue={state.data?.searchSource || undefined}
+              defaultValue={state.data?.searchSource || ""}
             >
-              <MenuItem value={undefined}>Select Search Source</MenuItem>
+              <MenuItem value={""}>Select Search Source</MenuItem>
               <MenuItem value={SearchSource.LINKEDIN}>Linked In</MenuItem>
               <MenuItem value={SearchSource.HIRINGCAFE}>Hiring Cafe</MenuItem>
               <MenuItem value={SearchSource.BUILTIN}>Built In</MenuItem>
@@ -264,9 +264,9 @@ const ApplicationForm = ({ application = null }: ApplicationFormProps) => {
               id="resume-version"
               name="resume-version"
               label="Resume Version"
-              defaultValue={state.data?.resume || undefined}
+              defaultValue={state.data?.resume || ""}
             >
-              <MenuItem value={undefined}>Select Resume Version</MenuItem>
+              <MenuItem value={""}>Select Resume Version</MenuItem>
               <MenuItem value={ResumeVersion.FRONTEND_3}>Frontend 3</MenuItem>
               <MenuItem value={ResumeVersion.FULLSTACK_3}>Fullstack 3</MenuItem>
               <MenuItem value={ResumeVersion.ECOMM_3}>Ecomm 3</MenuItem>

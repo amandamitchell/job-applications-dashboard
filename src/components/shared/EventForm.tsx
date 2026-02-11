@@ -33,7 +33,7 @@ const EventForm = ({ applicationId, event = null }: EventFormProps) => {
               id="event-type"
               name="event-type"
               label="Event Type"
-              defaultValue={state.data?.type}
+              defaultValue={state.data?.type || ""}
             >
               {Object.keys(EventType).map((eventType) => (
                 <MenuItem value={eventType} key={eventType}>
@@ -51,9 +51,9 @@ const EventForm = ({ applicationId, event = null }: EventFormProps) => {
               id="interview-type"
               name="interview-type"
               label="Interview Type"
-              defaultValue={state.data?.interviewType || undefined}
+              defaultValue={state.data?.interviewType || ""}
             >
-              <MenuItem>Select Interview Type</MenuItem>
+              <MenuItem value="">Select Interview Type</MenuItem>
               {Object.keys(InterviewType).map((interviewType) => (
                 <MenuItem value={interviewType} key={interviewType}>
                   {interviewTypeLabel(interviewType as InterviewType)}

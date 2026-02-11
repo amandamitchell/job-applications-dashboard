@@ -14,11 +14,11 @@ type StatusChipProps = {
 
 const StatusChip = ({ status, size = "medium" }: StatusChipProps) => {
   if (status === Status.APPLIED || status === Status.RECRUITER_CONVO) {
-    return <Chip size={size} label={statusLabel(status)} color="info" icon={<AddCircleIcon />} />;
+    return <Chip size={size} label={statusLabel(status)} color="primary" icon={<AddCircleIcon />} />;
   }
 
   if (status === Status.INTERVIEWING || status === Status.RECRUITER_SUBMIT) {
-    return <Chip size={size} label={statusLabel(status)} color="warning" icon={<AccountCircleIcon />} />;
+    return <Chip size={size} label={statusLabel(status)} color="secondary" icon={<AccountCircleIcon />} />;
   }
 
   if (status === Status.OFFERED || status === Status.ACCEPTED) {

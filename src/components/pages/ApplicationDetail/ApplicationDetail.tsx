@@ -10,6 +10,7 @@ import {
   interviewTypeLabel,
   locationTypeLabel,
 } from "@/lib/format";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CelebrationIcon from "@mui/icons-material/Celebration";
@@ -84,13 +85,16 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
             </Stack>
             <Stack direction="row" spacing={4}>
               <Stack direction="row" spacing={1} sx={{ flex: "1 1 33%" }}>
-                <PaidIcon color="primary" />
-                <Typography variant="body1">
-                  {application.compStart
-                    ? `$${application.compStart.toLocaleString()}${application.compEnd ? `–$${application.compEnd.toLocaleString()}` : ``} ${application.compType ? compTypeLabel(application.compType) : ``}`
-                    : "Unknown"}
-                </Typography>
+                {!!application.compStart && (
+                  <>
+                    <PaidIcon color="primary" />
+                    <Typography variant="body1">
+                      {`$${application.compStart.toLocaleString()}${application.compEnd ? `–$${application.compEnd.toLocaleString()}` : ``} ${application.compType ? compTypeLabel(application.compType) : ``}`}
+                    </Typography>
+                  </>
+                )}
               </Stack>
+
               <Stack direction="row" spacing={1} sx={{ flex: "1 1 33%" }}>
                 {!!application.employmentType && (
                   <>
@@ -100,23 +104,31 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
                 )}
               </Stack>
               <Stack direction="row" spacing={1} sx={{ flex: "1 1 33%" }}>
-                <PlaceIcon color="primary" />
-                <Typography variant="body1">
-                  {!!application.locationType && locationTypeLabel(application.locationType)}
-                  {!!application.location && ` – ${application.location}`}
-                </Typography>
+                {(!!application.locationType || !!application.location) && (
+                  <>
+                    <PlaceIcon color="primary" />
+                    <Typography variant="body1">
+                      {!!application.locationType && locationTypeLabel(application.locationType)}
+                      {!!application.location && ` – ${application.location}`}
+                    </Typography>
+                  </>
+                )}
               </Stack>
             </Stack>
             <Divider sx={{ mt: 2, mb: 4 }} />
-            <Typography variant="h3" component="h3" gutterBottom>
-              Details
-            </Typography>
-            {!!application.keySkills && <Typography variant="body1">{application.keySkills}</Typography>}
-            {!!application.yoe && <Typography variant="body1">{`${application.yoe} YOE`}</Typography>}
-            {!!application.notes && (
-              <Typography variant="body1" sx={{ fontStyle: "italic" }}>
-                {application.notes}
-              </Typography>
+            {(!!application.keySkills || !!application.yoe || !!application.notes) && (
+              <>
+                <Typography variant="h3" component="h3" gutterBottom>
+                  Details
+                </Typography>
+                {!!application.keySkills && <Typography variant="body1">{application.keySkills}</Typography>}
+                {!!application.yoe && <Typography variant="body1">{`${application.yoe} YOE`}</Typography>}
+                {!!application.notes && (
+                  <Typography variant="body1" sx={{ fontStyle: "italic" }}>
+                    {application.notes}
+                  </Typography>
+                )}
+              </>
             )}
             {!!application.events && application.events.length > 0 && (
               <>
@@ -124,7 +136,12 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
                   <Typography variant="h3" component="h3">
                     Timeline
                   </Typography>
-                  <Button variant="contained" component={NextLink} href={`/application/${application.id}/event/new`}>
+                  <Button
+                    variant="contained"
+                    component={NextLink}
+                    href={`/application/${application.id}/event/new`}
+                    startIcon={<AddCircleIcon />}
+                  >
                     Add Event
                   </Button>
                 </Stack>
@@ -148,15 +165,16 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
                           <TableCell>{eventTypeLabel(event.type)}</TableCell>
                           <TableCell>{!!event.interviewType && interviewTypeLabel(event.interviewType)}</TableCell>
                           <TableCell>{event.notes}</TableCell>
-                          <TableCell>
+                          <TableCell align="right">
                             <Button
                               component={NextLink}
                               href={`/application/${application.id}/event/edit/${event.id}`}
-                              variant="contained"
+                              variant="outlined"
                               color="secondary"
                               startIcon={<EditIcon />}
+                              sx={{ whiteSpace: "nowrap" }}
                             >
-                              Edit
+                              Edit Event
                             </Button>
                           </TableCell>
                         </TableRow>
@@ -188,7 +206,7 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
                 color="secondary"
                 startIcon={<EditIcon />}
               >
-                Edit
+                Edit Job
               </Button>
               {/* <Button variant="outlined" startIcon={<DeleteIcon />}>
                                 Delete
