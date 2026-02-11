@@ -11,9 +11,9 @@ import {
   SearchSource,
   Status,
 } from "@/generated/prisma/enums";
-import { SortOrder } from "@/generated/prisma/internal/prismaNamespace";
+import { ApplicationWhereInput } from "@/generated/prisma/internal/prismaNamespace";
 import prisma from "@/lib/prisma";
-import { SortBy } from "@/types/types";
+import { ApplicationSearchParams } from "@/types/types";
 import { formFieldToDate } from "./format";
 
 export type ApplicationDetailData = Awaited<ReturnType<typeof getApplication>>;
@@ -26,23 +26,44 @@ export async function getApplications({
   sortBy,
   page,
   perPage,
-}: {
-  sortDir?: SortOrder;
-  sortBy?: SortBy;
-  page?: number;
-  perPage?: number;
-}) {
+  status,
+  search,
+  query,
+}: ApplicationSearchParams) {
   if (!sortDir) sortDir = "desc";
   if (!sortBy) sortBy = "lastUpdated";
-  if (!page) page = 1;
-  if (!perPage) perPage = 25;
+  if (!page) page = "1";
+  if (!perPage) perPage = "25";
 
-  const skip = (page - 1) * perPage;
+  const skip = (parseInt(page) - 1) * parseInt(perPage);
+
+  let where: ApplicationWhereInput | undefined = undefined;
+
+  if (status) {
+    where = {
+      status: {
+        equals: status,
+      },
+    };
+  }
+
+  if (query && search) {
+    where = {
+      ...where,
+      [search]: {
+        contains: query,
+        mode: "insensitive",
+      },
+    };
+  }
+
+  console.log("where", where);
 
   const applicationQuery = prisma.application.findMany({
     orderBy: { [sortBy]: sortDir },
     skip,
-    take: perPage,
+    take: parseInt(perPage),
+    where,
     select: {
       id: true,
       employer: true,
@@ -55,7 +76,7 @@ export async function getApplications({
     },
   });
 
-  const applicationCountQuery = prisma.application.count();
+  const applicationCountQuery = prisma.application.count({ where });
 
   const [applications, count] = await prisma.$transaction([applicationQuery, applicationCountQuery]);
 

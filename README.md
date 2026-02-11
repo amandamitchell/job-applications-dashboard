@@ -42,7 +42,7 @@ npm run dev
 - [x] Associated recruiting company & recruiter name
 - [x] Auto-update status when adding events
 - [x] Auto-update last updated date when adding events
-- [ ] Pagination / filtering / sorting on main list
+- [x] Pagination / filtering / sorting on main list
 - [ ] Stats view
 - [ ] Error and loading states
 - [ ] Export data to CSV

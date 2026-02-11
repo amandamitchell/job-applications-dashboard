@@ -1,15 +1,19 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { TablePagination } from "@mui/material";
 
 type ApplicationsTablePaginationProps = {
-  page: number;
-  perPage: number;
   count: number;
   handlePageChange: (page: number) => void;
 };
 
-const ApplicationsTablePagination = ({ page, perPage, count, handlePageChange }: ApplicationsTablePaginationProps) => {
+const ApplicationsTablePagination = ({ count, handlePageChange }: ApplicationsTablePaginationProps) => {
+  const searchParams = useSearchParams();
+
+  const page = parseInt(searchParams.get("page") || "1");
+  const perPage = parseInt(searchParams.get("perPage") || "25");
+
   return (
     <TablePagination
       component="div"

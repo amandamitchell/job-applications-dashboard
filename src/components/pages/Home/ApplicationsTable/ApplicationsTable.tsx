@@ -2,10 +2,10 @@
 
 import { useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { SortOrder } from "@/generated/prisma/internal/prismaNamespace";
 import type { ApplicationListData } from "@/lib/actions";
-import { SortBy } from "@/types/types";
+import { ApplicationSearchParams } from "@/types/types";
 import { Backdrop, Paper, Table, TableBody, TableContainer } from "@mui/material";
+import ApplicationsTableFilters from "./ApplicationsTableFilters";
 import ApplicationsTableHead from "./ApplicationsTableHead";
 import ApplicationsTablePagination from "./ApplicationsTablePagination";
 import ApplicationsTableRow from "./ApplicationsTableRow";
@@ -13,48 +13,73 @@ import ApplicationsTableRow from "./ApplicationsTableRow";
 type ApplicationsTableProps = {
   applications: ApplicationListData["applications"];
   count: number;
-  sortDir: SortOrder;
-  sortBy: SortBy;
-  page: number;
-  perPage: number;
 };
 
-const ApplicationsTable = ({ applications, count, sortDir, sortBy, page, perPage }: ApplicationsTableProps) => {
+const ApplicationsTable = ({ applications, count }: ApplicationsTableProps) => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
-  const handleParamsChange = (param: string, value: string) => {
+  const sortDir = (searchParams.get("sortDir") as ApplicationSearchParams["sortDir"]) || "desc";
+
+  const handleParamsChange = (params: [string, string | null][]) => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set(param, value);
+    for (const [param, value] of params) {
+      if (!value) {
+        newSearchParams.delete(param);
+      } else {
+        newSearchParams.set(param, value);
+      }
+    }
     startTransition(() => {
       router.push(`${pathname}?${newSearchParams.toString()}`);
     });
   };
 
   const handlePageChange = (newPage: number) => {
-    handleParamsChange("page", newPage.toString());
+    handleParamsChange([["page", newPage.toString()]]);
   };
 
   const handleSortDirChange = () => {
-    handleParamsChange("sortDir", sortDir === "desc" ? "asc" : "desc");
+    handleParamsChange([["sortDir", sortDir === "desc" ? "asc" : "desc"]]);
   };
 
   const handleSortByChange = (newSortBy: string) => {
-    handleParamsChange("sortBy", newSortBy);
+    handleParamsChange([["sortBy", newSortBy]]);
+  };
+
+  const handleStatusChange = (newStatus: string) => {
+    if (newStatus === searchParams.get("status")) {
+      handleParamsChange([["status", null]]);
+    } else {
+      handleParamsChange([["status", newStatus]]);
+    }
+  };
+
+  const handleSearchQueryChange = (newSearchQuery: string | null, newSearchField: string) => {
+    if (!newSearchQuery) {
+      handleParamsChange([
+        ["query", null],
+        ["search", null],
+      ]);
+    } else {
+      handleParamsChange([
+        ["query", newSearchQuery],
+        ["search", newSearchField],
+      ]);
+    }
   };
 
   return (
     <>
+      <ApplicationsTableFilters
+        handleStatusChange={handleStatusChange}
+        handleSearchQueryChange={handleSearchQueryChange}
+      />
       <TableContainer component={Paper}>
         <Table>
-          <ApplicationsTableHead
-            sortBy={sortBy}
-            sortDir={sortDir}
-            handleSortDirChange={handleSortDirChange}
-            handleSortByChange={handleSortByChange}
-          />
+          <ApplicationsTableHead handleSortDirChange={handleSortDirChange} handleSortByChange={handleSortByChange} />
           <TableBody>
             {applications.map((application) => (
               <ApplicationsTableRow key={application.id} application={application} />
@@ -62,7 +87,7 @@ const ApplicationsTable = ({ applications, count, sortDir, sortBy, page, perPage
           </TableBody>
         </Table>
       </TableContainer>
-      <ApplicationsTablePagination page={page} perPage={perPage} count={count} handlePageChange={handlePageChange} />
+      <ApplicationsTablePagination count={count} handlePageChange={handlePageChange} />
       <Backdrop open={isPending} />
     </>
   );

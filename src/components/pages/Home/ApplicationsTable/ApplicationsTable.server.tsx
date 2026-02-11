@@ -1,27 +1,20 @@
-import { SortOrder } from "@/generated/prisma/internal/prismaNamespace";
 import { getApplications } from "@/lib/actions";
-import { SortBy } from "@/types/types";
+import { ApplicationSearchParams } from "@/types/types";
 import ApplicationsTable from "./ApplicationsTable";
 
-type ApplicationsTableRSCProps = {
-  sortDir: SortOrder;
-  sortBy: SortBy;
-  page: number;
-  perPage: number;
-};
+type ApplicationsTableRSCProps = ApplicationSearchParams;
 
-const ApplicationsTableRSC = async ({ sortDir, sortBy, page, perPage }: ApplicationsTableRSCProps) => {
-  const { applications, count } = await getApplications({ sortDir, sortBy, page, perPage });
-  return (
-    <ApplicationsTable
-      applications={applications}
-      count={count}
-      sortBy={sortBy}
-      sortDir={sortDir}
-      page={page}
-      perPage={perPage}
-    />
-  );
+const ApplicationsTableRSC = async ({
+  sortDir,
+  sortBy,
+  page,
+  perPage,
+  status,
+  query,
+  search,
+}: ApplicationsTableRSCProps) => {
+  const { applications, count } = await getApplications({ sortDir, sortBy, page, perPage, status, query, search });
+  return <ApplicationsTable applications={applications} count={count} />;
 };
 
 export default ApplicationsTableRSC;
