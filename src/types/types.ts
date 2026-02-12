@@ -8,7 +8,7 @@ export type ApplicationSearchParams = {
   sortBy: SortBy | undefined;
   page: string | undefined;
   perPage: string | undefined;
-  status: Status | undefined;
+  status: Status[] | Status | undefined;
   search: "employer" | "title" | "recruiter" | "recruitingCo" | undefined;
   query: string | undefined;
 };

@@ -15,7 +15,6 @@ import {
   Menu,
   MenuItem,
   Select,
-  SelectChangeEvent,
   Stack,
   TextField,
 } from "@mui/material";
@@ -50,61 +49,50 @@ const ApplicationsTableFilters = ({ handleStatusChange, handleSearchQueryChange 
     setIsOpen(false);
   };
 
-  const [searchQuery, setSearchQuery] = useState(searchParams.get("query"));
-  const [searchField, setSearchField] = useState(searchParams.get("search") || "employer");
-
-  const handleSearchButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSearchFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleSearchQueryChange(searchQuery, searchField);
+    const formData = new FormData(e.currentTarget);
+    handleSearchQueryChange(
+      formData.get("search-query")?.toString() || null,
+      formData.get("search-field")?.toString() || "employer",
+    );
   };
 
   return (
     <Box sx={{ mt: 1, mb: 2 }}>
       <Stack direction="row" spacing={4}>
-        <Stack direction="row" spacing={1}>
-          <TextField
-            size="small"
-            label="Search Field"
-            name="search-query"
-            id="search-query"
-            defaultValue={searchQuery}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setSearchQuery(e.currentTarget.value);
-            }}
-            sx={{ bgcolor: "white" }}
-          />
-          <FormControl>
-            <InputLabel id="search-field-label">Search Field</InputLabel>
-            <Select
-              labelId="search-field-label"
-              label="Search Field"
-              name="search-field"
-              id="search-field"
+        <form onSubmit={handleSearchFormSubmit}>
+          <Stack direction="row" spacing={1}>
+            <TextField
               size="small"
-              value={searchField}
-              onChange={(e: SelectChangeEvent) => {
-                setSearchField(e.target.value);
-              }}
+              label="Search Field"
+              name="search-query"
+              id="search-query"
+              defaultValue={searchParams.get("query") || ""}
               sx={{ bgcolor: "white" }}
-            >
-              <MenuItem value="employer" selected={searchField === "employer"}>
-                Employer
-              </MenuItem>
-              <MenuItem value="title" selected={searchField === "title"}>
-                Job Title
-              </MenuItem>
-              <MenuItem value="recruiter" selected={searchField === "recruiter"}>
-                Recruiter Name
-              </MenuItem>
-              <MenuItem value="recruitingCo" selected={searchField === "recruitingCo"}>
-                Recruiting Company
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <Button variant="contained" color="secondary" onClick={handleSearchButtonClick} startIcon={<SearchIcon />}>
-            Search
-          </Button>
-        </Stack>
+            />
+            <FormControl>
+              <InputLabel id="search-field-label">Search Field</InputLabel>
+              <Select
+                labelId="search-field-label"
+                label="Search Field"
+                name="search-field"
+                id="search-field"
+                size="small"
+                defaultValue={searchParams.get("search") || "employer"}
+                sx={{ bgcolor: "white" }}
+              >
+                <MenuItem value="employer">Employer</MenuItem>
+                <MenuItem value="title">Job Title</MenuItem>
+                <MenuItem value="recruiter">Recruiter Name</MenuItem>
+                <MenuItem value="recruitingCo">Recruiting Company</MenuItem>
+              </Select>
+            </FormControl>
+            <Button type="submit" variant="contained" color="secondary" startIcon={<SearchIcon />}>
+              Search
+            </Button>
+          </Stack>
+        </form>
         <Button
           variant="contained"
           color="secondary"
@@ -117,7 +105,13 @@ const ApplicationsTableFilters = ({ handleStatusChange, handleSearchQueryChange 
         <Menu open={isOpen} anchorEl={menuAnchorElem} onClose={handleClose}>
           <ListSubheader>Status</ListSubheader>
           {Object.keys(Status).map((s) => (
-            <MenuItem key={s} id={s} onClick={handleMenuClick} selected={searchParams.get("status") === s} dense>
+            <MenuItem
+              key={s}
+              id={s}
+              onClick={handleMenuClick}
+              selected={searchParams.getAll("status").includes(s)}
+              dense
+            >
               {statusLabel(s as Status)}
             </MenuItem>
           ))}

@@ -52,9 +52,12 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
 
   const timeSinceApplication = useMemo(() => {
     const today = new Date();
-    const timeDiff = today.getTime() - application.createdAt.getTime();
+    today.setHours(0, 0, 0, 0);
+    const applied = new Date(application.createdAt.toISOString());
+    applied.setHours(0, 0, 0, 0);
+    const timeDiff = today.getTime() - applied.getTime();
     const timeDiffDays = timeDiff / (1000 * 60 * 60 * 24);
-    return Math.ceil(timeDiffDays);
+    return Math.floor(timeDiffDays);
   }, [application.createdAt]);
 
   const timeSinceFirstResponse = useMemo(() => {
@@ -67,9 +70,12 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
     );
     if (firstResponse.length > 0) {
       const today = new Date();
-      const timeDiff = today.getTime() - firstResponse[firstResponse.length - 1].createdAt.getTime();
+      today.setHours(0, 0, 0, 0);
+      const firstResponseTime = new Date(firstResponse[firstResponse.length - 1].createdAt.toISOString());
+      firstResponseTime.setHours(0, 0, 0, 0);
+      const timeDiff = today.getTime() - firstResponseTime.getTime();
       const timeDiffDays = timeDiff / (1000 * 60 * 60 * 24);
-      return Math.ceil(timeDiffDays);
+      return Math.floor(timeDiffDays);
     }
     return null;
   }, [application.events]);
@@ -77,9 +83,12 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
   const timeSinceLastAction = useMemo(() => {
     if (application.events.length > 0) {
       const today = new Date();
-      const timeDiff = today.getTime() - application.events[0].createdAt.getTime();
+      today.setHours(0, 0, 0, 0);
+      const lastActionTime = new Date(application.events[0].createdAt.toISOString());
+      lastActionTime.setHours(0, 0, 0, 0);
+      const timeDiff = today.getTime() - lastActionTime.getTime();
       const timeDiffDays = timeDiff / (1000 * 60 * 60 * 24);
-      return Math.ceil(timeDiffDays);
+      return Math.floor(timeDiffDays);
     }
   }, [application.events]);
 

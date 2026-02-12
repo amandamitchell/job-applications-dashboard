@@ -50,11 +50,20 @@ const ApplicationsTable = ({ applications, count }: ApplicationsTableProps) => {
   };
 
   const handleStatusChange = (newStatus: string) => {
-    if (newStatus === searchParams.get("status")) {
-      handleParamsChange([["status", null]]);
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    const statuses = searchParams.getAll("status");
+    if (statuses.includes(newStatus)) {
+      newSearchParams.delete("status");
+      for (const status of statuses.filter((s) => s !== newStatus)) {
+        newSearchParams.append("status", status);
+      }
     } else {
-      handleParamsChange([["status", newStatus]]);
+      newSearchParams.append("status", newStatus);
     }
+
+    startTransition(() => {
+      router.push(`${pathname}?${newSearchParams.toString()}`);
+    });
   };
 
   const handleSearchQueryChange = (newSearchQuery: string | null, newSearchField: string) => {

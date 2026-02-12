@@ -1,8 +1,14 @@
+import { Status } from "@/generated/prisma/enums";
 import { getApplications } from "@/lib/actions";
 import { ApplicationSearchParams } from "@/types/types";
 import ApplicationsTable from "./ApplicationsTable";
 
-type ApplicationsTableRSCProps = ApplicationSearchParams;
+type ApplicationsTableRSCProps = Pick<
+  ApplicationSearchParams,
+  "page" | "perPage" | "query" | "search" | "sortBy" | "sortDir"
+> & {
+  status: Status[] | undefined;
+};
 
 const ApplicationsTableRSC = async ({
   sortDir,

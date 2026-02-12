@@ -29,7 +29,9 @@ export async function getApplications({
   status,
   search,
   query,
-}: ApplicationSearchParams) {
+}: Pick<ApplicationSearchParams, "page" | "perPage" | "query" | "search" | "sortBy" | "sortDir"> & {
+  status: Status[] | undefined;
+}) {
   if (!sortDir) sortDir = "desc";
   if (!sortBy) sortBy = "lastUpdated";
   if (!page) page = "1";
@@ -42,7 +44,7 @@ export async function getApplications({
   if (status) {
     where = {
       status: {
-        equals: status,
+        in: status,
       },
     };
   }

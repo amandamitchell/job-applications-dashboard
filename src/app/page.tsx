@@ -15,7 +15,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           sortDir={sortDir}
           page={page}
           perPage={perPage}
-          status={status}
+          status={typeof status === "string" ? [status] : status}
           query={query}
           search={search}
         />
