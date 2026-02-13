@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo } from "react";
 import NextLink from "@/components/shared/NextLink";
 import StatusChip from "@/components/shared/StatusChip";
@@ -6,39 +8,20 @@ import { ApplicationDetailData } from "@/lib/actions";
 import {
   compTypeLabel,
   employmentTypeLabel,
-  eventTypeLabel,
   formatRecruiterInfo,
-  interviewTypeLabel,
   locationTypeLabel,
   resumeVersionLabel,
   searchSourceLabel,
 } from "@/lib/format";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import CancelIcon from "@mui/icons-material/Cancel";
-import CelebrationIcon from "@mui/icons-material/Celebration";
+import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import EditCalendarIcon from "@mui/icons-material/EditCalendar";
-import EventIcon from "@mui/icons-material/Event";
-import MoveToInboxIcon from "@mui/icons-material/MoveToInbox";
 import PaidIcon from "@mui/icons-material/Paid";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import PlaceIcon from "@mui/icons-material/Place";
-import ReplyIcon from "@mui/icons-material/Reply";
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Divider, Paper, Stack, Typography } from "@mui/material";
+import EventsList from "./EventsList";
 
 type ApplicationDetailProps = {
   application: NonNullable<ApplicationDetailData>;
@@ -175,60 +158,24 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
                 )}
               </>
             )}
+
+            <Stack direction="row" sx={{ mt: 6, mb: 2, alignItems: "center", justifyContent: "space-between" }}>
+              <Typography variant="h3" component="h3">
+                Timeline
+              </Typography>
+              <Button
+                variant="contained"
+                component={NextLink}
+                href={`/application/${application.id}/event/new`}
+                startIcon={<AddCircleIcon />}
+              >
+                Add Event
+              </Button>
+            </Stack>
             {!!application.events && application.events.length > 0 && (
-              <>
-                <Stack direction="row" sx={{ mt: 6, mb: 2, alignItems: "center", justifyContent: "space-between" }}>
-                  <Typography variant="h3" component="h3">
-                    Timeline
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    component={NextLink}
-                    href={`/application/${application.id}/event/new`}
-                    startIcon={<AddCircleIcon />}
-                  >
-                    Add Event
-                  </Button>
-                </Stack>
-                <TableContainer>
-                  <Table sx={{ border: 1, borderColor: "divider" }}>
-                    <TableBody>
-                      {application.events.map((event) => (
-                        <TableRow key={`${event.type}-${event.createdAt}`}>
-                          <TableCell>
-                            {event.type === EventType.APPLICATION && <MoveToInboxIcon color="primary" />}
-                            {event.type === EventType.INTERVIEW && <EventIcon color="primary" />}
-                            {event.type === EventType.SCHEDULE_REQUEST && <EditCalendarIcon color="secondary" />}
-                            {event.type === EventType.FOLLOW_UP && <ReplyIcon color="secondary" />}
-                            {event.type === EventType.FOLLOW_UP_SELF && <ReplyIcon color="primary" />}
-                            {event.type === EventType.OFFER && <CelebrationIcon color="secondary" />}
-                            {event.type === EventType.REJECTION && <CancelIcon color="secondary" />}
-                            {event.type === EventType.AUTO_REJECTION && <CancelIcon color="secondary" />}
-                            {event.type === EventType.WITHDRAWAL && <CancelIcon color="primary" />}
-                          </TableCell>
-                          <TableCell>{event.createdAt.toDateString()}</TableCell>
-                          <TableCell>{eventTypeLabel(event.type)}</TableCell>
-                          <TableCell>{!!event.interviewType && interviewTypeLabel(event.interviewType)}</TableCell>
-                          <TableCell>{event.notes}</TableCell>
-                          <TableCell align="right">
-                            <Button
-                              component={NextLink}
-                              href={`/application/${application.id}/event/edit/${event.id}`}
-                              variant="outlined"
-                              color="secondary"
-                              startIcon={<EditIcon />}
-                              sx={{ whiteSpace: "nowrap" }}
-                            >
-                              Edit Event
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </>
+              <EventsList applicationId={application.id} events={application.events} />
             )}
+
             <Typography variant="h4" component="h3" gutterBottom sx={{ mt: 4 }}>
               Stats
             </Typography>
@@ -274,9 +221,9 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
               >
                 Edit Job
               </Button>
-              {/* <Button variant="outlined" startIcon={<DeleteIcon />}>
-                                Delete
-                            </Button> */}
+              <Button variant="outlined" startIcon={<DeleteIcon />}>
+                Delete
+              </Button>
             </Stack>
           </Box>
         </Paper>
