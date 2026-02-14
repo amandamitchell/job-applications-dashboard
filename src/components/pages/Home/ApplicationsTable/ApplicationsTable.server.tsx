@@ -1,5 +1,5 @@
 import { Status } from "@/generated/prisma/enums";
-import { getApplications } from "@/lib/actions";
+import { getApplications } from "@/lib/applications";
 import { ApplicationSearchParams } from "@/types/types";
 import ApplicationsTable from "./ApplicationsTable";
 

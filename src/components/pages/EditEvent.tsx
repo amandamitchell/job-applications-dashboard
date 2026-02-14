@@ -1,5 +1,5 @@
 import EventForm from "@/components/shared/EventForm";
-import { EventDetailData } from "@/lib/actions";
+import type { EventDetailData } from "@/lib/events";
 import { Box, Container, Divider, Paper, Typography } from "@mui/material";
 
 type EditEventProps = {

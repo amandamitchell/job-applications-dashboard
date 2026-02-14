@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import EditApplication from "@/components/pages/EditApplication/EditApplication";
-import { getApplication } from "@/lib/actions";
+import { getApplication } from "@/lib/applications";
 
 type EditApplicationPageProps = {
   params: Promise<{ id: string }>;

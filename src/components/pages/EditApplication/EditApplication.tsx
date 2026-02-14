@@ -1,5 +1,5 @@
 import ApplicationForm from "@/components/shared/ApplicationForm";
-import { ApplicationDetailData } from "@/lib/actions";
+import type { ApplicationDetailData } from "@/lib/applications";
 import { Box, Container, Paper, Typography } from "@mui/material";
 
 type EditApplicationProps = {

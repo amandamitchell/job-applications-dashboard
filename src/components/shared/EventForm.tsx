@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import NextLink from "@/components/shared/NextLink";
 import { EventType, InterviewType } from "@/generated/prisma/enums";
-import { EventDetailData, saveEvent } from "@/lib/actions";
+import { type EventDetailData, saveEvent } from "@/lib/events";
 import { dateToFormField, eventTypeLabel, interviewTypeLabel } from "@/lib/format";
 import { Alert, Button, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField } from "@mui/material";
 

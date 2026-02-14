@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import NewEvent from "@/components/pages/NewEvent/NewEvent";
-import { getApplicationBasic } from "@/lib/actions";
+import { getApplicationBasic } from "@/lib/applications";
 
 type NewEventPageProps = {
   params: Promise<{ id: string }>;

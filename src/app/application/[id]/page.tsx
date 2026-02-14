@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import ApplicationDetail from "@/components/pages/ApplicationDetail/ApplicationDetail";
-import { getApplication } from "@/lib/actions";
+import { getApplication } from "@/lib/applications";
 
 type ApplicationDetailPageProps = {
   params: Promise<{ id: string }>;

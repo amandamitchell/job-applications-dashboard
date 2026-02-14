@@ -4,12 +4,13 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 
 type DeleteConfirmationProps = {
+  type: string;
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
 };
 
-const DeleteConfirmation = ({ open, onClose, onConfirm }: DeleteConfirmationProps) => {
+const DeleteConfirmation = ({ type, open, onClose, onConfirm }: DeleteConfirmationProps) => {
   return (
     <Dialog
       open={open}
@@ -17,7 +18,7 @@ const DeleteConfirmation = ({ open, onClose, onConfirm }: DeleteConfirmationProp
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{`Are you sure you want to delete this event?`}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{`Are you sure you want to delete this ${type}?`}</DialogTitle>
       <DialogActions>
         <Button variant="contained" onClick={onConfirm} autoFocus>
           Delete

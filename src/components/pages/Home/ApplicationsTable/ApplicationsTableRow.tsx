@@ -1,7 +1,7 @@
 import NextLink from "@/components/shared/NextLink";
 import StatusChip from "@/components/shared/StatusChip";
 import { Status } from "@/generated/prisma/enums";
-import { ApplicationListData } from "@/lib/actions";
+import type { ApplicationListData } from "@/lib/applications";
 import { formatRecruiterInfo } from "@/lib/format";
 import { Link, TableCell, TableRow } from "@mui/material";
 import { grey, teal } from "@mui/material/colors";

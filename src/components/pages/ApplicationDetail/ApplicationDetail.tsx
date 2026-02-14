@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import NextLink from "@/components/shared/NextLink";
 import StatusChip from "@/components/shared/StatusChip";
 import { EventType } from "@/generated/prisma/enums";
-import { ApplicationDetailData } from "@/lib/actions";
+import { type ApplicationDetailData, deleteApplication } from "@/lib/applications";
 import {
   compTypeLabel,
   employmentTypeLabel,
@@ -21,6 +21,7 @@ import PaidIcon from "@mui/icons-material/Paid";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import PlaceIcon from "@mui/icons-material/Place";
 import { Box, Button, Container, Divider, Paper, Stack, Typography } from "@mui/material";
+import DeleteConfirmation from "./DeleteConfirmation";
 import EventsList from "./EventsList";
 
 type ApplicationDetailProps = {
@@ -28,6 +29,21 @@ type ApplicationDetailProps = {
 };
 
 const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
+  const [confirmIsOpen, setConfirmIsOpen] = useState(false);
+
+  const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setConfirmIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setConfirmIsOpen(false);
+  };
+
+  const handleConfirm = () => {
+    deleteApplication(application.id);
+  };
+
   const recrutierInfo = formatRecruiterInfo({
     recruiter: application.recruiter,
     recruitingCo: application.recruitingCo,
@@ -221,13 +237,14 @@ const ApplicationDetail = ({ application }: ApplicationDetailProps) => {
               >
                 Edit Job
               </Button>
-              <Button variant="outlined" startIcon={<DeleteIcon />}>
+              <Button variant="outlined" startIcon={<DeleteIcon />} onClick={handleDeleteClick}>
                 Delete
               </Button>
             </Stack>
           </Box>
         </Paper>
       </Container>
+      <DeleteConfirmation type="application" open={confirmIsOpen} onClose={handleClose} onConfirm={handleConfirm} />
     </Box>
   );
 };

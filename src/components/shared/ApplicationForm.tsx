@@ -3,8 +3,7 @@
 import { useActionState } from "react";
 import NextLink from "@/components/shared/NextLink";
 import { CompType, EmploymentType, LocationType, ResumeVersion, SearchSource, Status } from "@/generated/prisma/enums";
-import { ApplicationDetailData } from "@/lib/actions";
-import { saveApplication } from "@/lib/actions";
+import { type ApplicationDetailData, saveApplication } from "@/lib/applications";
 import { dateToFormField, statusLabel } from "@/lib/format";
 import {
   Alert,

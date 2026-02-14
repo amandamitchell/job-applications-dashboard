@@ -3,7 +3,7 @@
 import { useActionState, useState } from "react";
 import NextLink from "@/components/shared/NextLink";
 import { EventType } from "@/generated/prisma/enums";
-import { ApplicationDetailData } from "@/lib/actions";
+import type { ApplicationDetailData } from "@/lib/applications";
 import { deleteEvent } from "@/lib/events";
 import { eventTypeLabel, interviewTypeLabel } from "@/lib/format";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -98,7 +98,7 @@ const EventsList = ({ applicationId, events }: EventsListProps) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <DeleteConfirmation open={confirmIsOpen} onClose={handleClose} onConfirm={handleConfirm} />
+      <DeleteConfirmation type="event" open={confirmIsOpen} onClose={handleClose} onConfirm={handleConfirm} />
     </>
   );
 };

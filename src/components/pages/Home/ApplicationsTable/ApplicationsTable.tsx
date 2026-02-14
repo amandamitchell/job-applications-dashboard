@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import type { ApplicationListData } from "@/lib/actions";
+import type { ApplicationListData } from "@/lib/applications";
 import { ApplicationSearchParams } from "@/types/types";
 import { Backdrop, Paper, Table, TableBody, TableContainer } from "@mui/material";
 import ApplicationsTableFilters from "./ApplicationsTableFilters";

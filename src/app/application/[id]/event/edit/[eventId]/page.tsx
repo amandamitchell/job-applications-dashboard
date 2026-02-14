@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import EditEvent from "@/components/pages/EditEvent";
-import { getApplication } from "@/lib/actions";
+import { getApplication } from "@/lib/applications";
 
 type EditEventPageProps = {
   params: Promise<{ id: string; eventId: string }>;
