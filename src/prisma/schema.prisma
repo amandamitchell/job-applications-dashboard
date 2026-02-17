@@ -15,35 +15,39 @@ datasource db {
 
 model Application {
   id              Int             @id @default(autoincrement())
-  createdAt       DateTime        @default(now())
-  lastUpdated     DateTime        @default(now())
+  createdAt       DateTime        @map("created_at") @default(now())
+  lastUpdated     DateTime        @map("last_updated") @default(now())
   employer        String?
   title           String?
-  recruitingCo    String?
+  recruitingCo    String?         @map("recruiting_co")
   recruiter       String?
   status          Status          @default(APPLIED)
-  employmentType  EmploymentType?
-  locationType    LocationType?
+  employmentType  EmploymentType? @map("employment_type")
+  locationType    LocationType?   @map("location_type")
   location        String?
-  compStart       Float?
-  compEnd         Float?
-  compType        CompType?
-  keySkills       String?
+  compStart       Float?          @map("comp_start")
+  compEnd         Float?          @map("comp_end")
+  compType        CompType?       @map("comp_type")
+  keySkills       String?         @map("key_skills")
   yoe             String?
   notes           String?
-  searchSource    SearchSource?
+  searchSource    SearchSource?   @map("search_source")
   resume          ResumeVersion?
   events          Event[]
+
+  @@map("applications")
 }
 
 model Event {
-  id            Int         @id @default(autoincrement())
-  createdAt     DateTime    @default(now())
-  applicationId Int
-  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
-  type          EventType   @default(APPLICATION)
-  interviewType InterviewType?
+  id            Int             @id @default(autoincrement())
+  createdAt     DateTime        @map("created_at") @default(now())
+  applicationId Int             @map("application_id")
+  application   Application     @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  type          EventType       @default(APPLICATION)
+  interviewType InterviewType?  @map("interview_type")
   notes         String?
+
+  @@map("events")
 }
 
 enum EmploymentType {
