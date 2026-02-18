@@ -13,6 +13,50 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql
+    networks:
+      - jobapp_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: ./docker/api.dockerfile
+    container_name: jobapp_php
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@jobapp_postgres:5432/${POSTGRES_DB}
+      DB_HOST: jobapp_postgres
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASS: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./api-server:/var/www/api-server
+    networks:
+      - jobapp_network
+    depends_on:
+      jobapp_postgres:
+        condition: service_healthy
+
+  nginx:
+    image: nginx:alpine
+    container_name: jobapp_nginx
+    ports:
+      - "8001:80"
+    volumes:
+      - ./api-server:/var/www/api-server
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - jobapp_network
+    depends_on:
+      - php-fpm
 
 volumes:
   postgres_data:
+
+networks:
+  jobapp_network:
+    driver: bridge
